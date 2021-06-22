@@ -70,7 +70,18 @@
   padding: 6px;
   margin: 0 8px;
   border-radius: 8px;
+
+  display: flex;
+  align-items: center;
 }
 .chatbox-card:hover {
   background-color: var(--pink);
+}
+.chatbox-card__info {
+  margin-left: 16px;
+  max-width: 220px;
+  
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
