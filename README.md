@@ -1,5 +1,3 @@
-![Dashboard design](https://mir-s3-cdn-cf.behance.net/project_modules/fs/b501a2120927441.60bb7122617da.png)
-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
