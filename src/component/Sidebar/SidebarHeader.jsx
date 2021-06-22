@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import SearchIcon from '../../assets/icon/search.svg';
 import DotIcon from '../../assets/icon/dot.svg';
@@ -29,11 +29,26 @@ const SidebarHeader = ({ size, rounded, shadow }) => {
       </div>
 
       <div className="sidebar-bottom">
-        <input type="text" placeholder="Search messenger" />
-        <img src={SearchIcon} alt="" />
+        <SearchInput />
       </div>
     </header>
   );
+}
+
+function SearchInput() {
+  const [input, setInput] = useState('')
+
+  return (
+    <>
+      <input
+        type="text"
+        placeholder="Search messenger"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+      />
+      {!input && <img src={SearchIcon} alt="" />}
+    </>
+  )
 }
 
 
