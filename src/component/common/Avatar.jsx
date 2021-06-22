@@ -2,26 +2,26 @@ import React from 'react';
 
 const AVATAR_SIZE_STYLES = {
   small: {
-    width: "48px",
-    height: "48px"
+    width: "28px",
+    height: "28px"
   },
   medium: {
-    width: "56px",
-    height: "56px"
+    width: "40px",
+    height: "40px"
   },
   large: {
-    width: "80px",
-    height: "80px"
+    width: "60px",
+    height: "60px"
   }
 }
 
 const Avatar = ({ imgSrc = "https://i.pravatar.cc/300", size = "medium" }) => {
   const imgStyle = {
-    padding: size === "small" || size === "medium" ? "3px" : "4px"
+    padding: "1px"
   }
 
   return (
-    <div className="bg-gradient round" style={AVATAR_SIZE_STYLES[size]}>
+    <div className="avatar round" style={AVATAR_SIZE_STYLES[size]}>
       <img className="round" style={imgStyle}
         src={imgSrc}
         alt=""
