@@ -16,6 +16,8 @@
 *,
 *:before,
 *:after {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -95,11 +97,13 @@ button {
   height: 36px;
   border-radius: 50%;
 }
-
 .btn:hover {
   background-color: rgb(0, 0, 0, 0.05);
 }
-
-.btn:active {
+.btn:active,
+.btn.btn--nobg:active {
   background-color: rgb(0, 0, 0, 0.1);
+}
+.btn.btn--nobg {
+  background-color: transparent;
 }
