@@ -1,12 +1,15 @@
 import React from 'react';
 
 const Button = (props) => {
-  const { icon, variant } = props;
+  const { iconName, variant, type, size, color } = props;
   let classArr = ["btn"];
   if (variant === "clear") classArr.push("btn--nobg");
+  if (size === "large") classArr.push("btn--large")
   return (
-    <button className={classArr.join(" ")}>
-      <img src={icon} alt="" />
+    <button type={type} className={classArr.join(" ")}>
+      <span style={{ color: color }} className="material-icons-round">
+        {iconName}
+      </span>
     </button>
   );
 }
