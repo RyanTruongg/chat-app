@@ -10,6 +10,8 @@
   --gradient: linear-gradient(40deg, #ff6ec4, #7873f5);
   --shadow: 0 0 15px 0 rgba(0,0,0,0.15);
   --pink: #FFF0E6;
+  --pink200: #efadce;
+  --pink300: #e685b5;
   --white: white;
   --text-color: var(--gray);
 }
@@ -92,10 +94,16 @@ button {
 
 .btn {
   background-color: #f5f5f5;
-  padding: 4px 8px;
+  padding: 4px;
   width: 36px;
   height: 36px;
   border-radius: 50%;
+}
+.btn span {
+  height: 100%;
+  width: 100%;
+  font-size: 2.6rem;
+  color: var(--gray);
 }
 .btn:hover {
   background-color: rgb(0, 0, 0, 0.05);
@@ -106,4 +114,7 @@ button {
 }
 .btn.btn--nobg {
   background-color: transparent;
+}
+.btn--large span{
+  font-size: 3rem;
 }

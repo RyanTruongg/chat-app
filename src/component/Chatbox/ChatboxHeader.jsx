@@ -3,10 +3,6 @@ import React from 'react';
 import Avatar from '../common/Avatar';
 import Button from '../common/Button';
 
-import CallIcon from '../../assets/icon/call.svg';
-import CameraIcon from '../../assets/icon/camera.svg';
-import DotIcon from '../../assets/icon/dot.svg';
-
 const ChatboxHeader = () => {
   return (
     <div className="chatbox__header">
@@ -18,9 +14,9 @@ const ChatboxHeader = () => {
         </div>
       </div>
       <div className="right">
-        <Button variant="clear" icon={CallIcon} />
-        <Button variant="clear" icon={CameraIcon} />
-        <Button variant="clear" icon={DotIcon} />
+        <Button variant="clear" iconName="phone_in_talk" color="var(--pink300)" />
+        <Button variant="clear" iconName="video_call" color="var(--pink300)" />
+        <Button variant="clear" iconName="more_horiz" color="var(--pink300)" />
       </div>
     </div>
   );

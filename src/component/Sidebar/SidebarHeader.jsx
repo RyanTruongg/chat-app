@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 
 import SearchIcon from '../../assets/icon/search.svg';
-import DotIcon from '../../assets/icon/dot.svg';
-import PlusIcon from '../../assets/icon/plus.svg';
-import LogoutIcon from '../../assets/icon/logout.svg';
 
 import Avatar from '../common/Avatar';
 import Button from '../common/Button';
@@ -22,9 +19,9 @@ const SidebarHeader = ({ size, rounded, shadow }) => {
         </div>
 
         <div className="sidebar-top-right">
-          <Button icon={DotIcon} />
-          <Button icon={PlusIcon} />
-          <Button icon={LogoutIcon} />
+          <Button iconName="more_horiz" />
+          <Button iconName="add" />
+          <Button iconName="logout" />
         </div>
       </div>
 

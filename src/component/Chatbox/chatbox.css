@@ -56,10 +56,18 @@
 
   box-shadow: var(--shadow);
 }
-.chatbox-msg-input input {
-  height: calc(100%);
+.chatbox-msg-input form {
+  display: flex;
+  /* align-items: center; */
+  height: 100%;
+}
+.chatbox-msg-input input[type="text"] {
   width: 100%;
-  border: 1px solid #bbb;
+  border: 1px solid var(--pink200);
   border-radius: 32px;
   padding: 0 16px;
+}
+
+.chatbox-msg-input button{
+ padding-left: 8px;
 }
