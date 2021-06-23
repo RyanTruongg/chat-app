@@ -90,3 +90,24 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
+
+@media only screen and (max-width: 768px) {
+  .sidebar {
+    width: 96px;
+  }
+  .sidebar-header {
+    display: none;
+  }
+  .chatbox-list {
+    height: 100vh;
+    margin-right: 0;
+  }
+  .chatbox-list::-webkit-scrollbar-thumb {
+    background: #bbb;
+  }
+  .chatbox-card__info {
+    display: none;
+  }
+  
+
+}

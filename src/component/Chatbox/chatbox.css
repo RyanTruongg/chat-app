@@ -1,5 +1,5 @@
 .chatbox {
-  width: auto;
+  width: calc(100vw - 360px);
   height: 100vh;
   flex-grow: 2;
   z-index: 1;
@@ -35,18 +35,6 @@
 
 .chatbox__header .right button{
   margin-right: 16px;
-}
-
-.chatbox-msg-container {
-  max-width: calc(100vw - 360px);
-  height: calc(100% - 64px - 64px);
-  margin-right: 4px;
-  padding: 0 16px;
-  overflow: scroll;
-  /* background-color: thistle; */
-}
-.chatbox-msg-container:hover::-webkit-scrollbar-thumb {
-  background: #bbb;
 }
 
 .chatbox-msg-input {
