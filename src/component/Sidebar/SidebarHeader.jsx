@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import SearchIcon from '../../assets/icon/search.svg';
-
 import Avatar from '../common/Avatar';
 import Button from '../common/Button';
 
-const SidebarHeader = ({ size, rounded, shadow }) => {
-  // const style = {
+import { useAuth } from '../../hook/use-auth';
 
-  // }
+const SidebarHeader = () => {
+  const history = useHistory();
+  const auth = useAuth();
 
   return (
     <header className="sidebar-header">
@@ -21,7 +22,7 @@ const SidebarHeader = ({ size, rounded, shadow }) => {
         <div className="sidebar-top-right">
           <Button iconName="more_horiz" />
           <Button iconName="add" />
-          <Button iconName="logout" />
+          <Button iconName="logout" onClick={() => auth.signout(() => history.push('/'))} />
         </div>
       </div>
 
