@@ -27,10 +27,15 @@
 }
 .chatbox-info__name{
   font-size: 1.8rem;
+  white-space: nowrap;
   font-weight: 600;
 }
 .chatbox-info__status{
   color: #888;
+}
+
+.chatbox__header .right {
+  display: flex;
 }
 
 .chatbox__header .right button{
@@ -58,4 +63,13 @@
 
 .chatbox-msg-input button{
  padding-left: 8px;
+}
+
+@media only screen and (max-width: 576px){
+  .chatbox-info__name {
+    font-size: 1.4rem;
+  }
+  .chatbox__header .right button{
+    margin-right: 8px;
+  }
 }
