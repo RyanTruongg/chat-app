@@ -1,26 +1,44 @@
 import {
   BrowserRouter as Router,
   Route,
+  Switch
 } from 'react-router-dom';
 
 import Sidebar from './component/Sidebar';
 import Chatbox from './component/Chatbox';
 import Login from './component/Login';
 
+import {
+  ProvideAuth,
+  PrivateRoute,
+} from './hook/use-auth';
+
+// import socket from './socket/socket';
+
 function App() {
+
   return (
     <div className="app">
-      <Router>
-        <Route path="/login">
-          <Login />
-        </Route>
+      <ProvideAuth>
+        <Router>
+          <Route exact path="/login">
+            <Login />
+          </Route>
 
-        <Route exact path="/">
-          <Sidebar />
-          <Chatbox />
-        </Route>
+          <PrivateRoute exact path="/">
+            <Router>
+              <Sidebar />
+              <Switch>
+                <PrivateRoute exact path="/t/:id">
+                  <Chatbox />
+                </PrivateRoute>
+              </Switch>
+            </Router>
+          </PrivateRoute>
 
-      </Router>
+        </Router>
+      </ProvideAuth>
+
     </div>
   );
 }
