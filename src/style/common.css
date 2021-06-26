@@ -59,7 +59,16 @@ img {
 }
 
 a {
+  display: block;
   text-decoration: none;
+  color: var(--gray);
+}
+
+a:active {
+  color: var(--gray);
+}
+a:visited {
+  color: var(--gray);
 }
 
 input,
