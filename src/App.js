@@ -29,7 +29,7 @@ function App() {
             <Router>
               <Sidebar />
               <Switch>
-                <PrivateRoute exact path="/t/:id">
+                <PrivateRoute exact path="/t/:roomID">
                   <Chatbox />
                 </PrivateRoute>
               </Switch>
