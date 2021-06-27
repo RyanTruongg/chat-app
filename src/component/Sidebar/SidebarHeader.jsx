@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import SearchIcon from '../../assets/icon/search.svg';
 import Avatar from '../common/Avatar';
@@ -7,22 +6,22 @@ import Button from '../common/Button';
 
 import { useAuth } from '../../hook/use-auth';
 
-const SidebarHeader = () => {
-  const history = useHistory();
+const SidebarHeader = ({ providerData }) => {
   const auth = useAuth();
+  const { photoURL } = providerData || {};
 
   return (
     <header className="sidebar-header">
       <div className="sidebar-top">
         <div className="sidebar-top-left">
-          <Avatar />
+          <Avatar imgSrc={photoURL} />
           <span>Chats</span>
         </div>
 
         <div className="sidebar-top-right">
           <Button iconName="more_horiz" />
           <Button iconName="add" />
-          <Button iconName="logout" onClick={() => auth.signout(() => history.push('/'))} />
+          <Button iconName="logout" onClick={auth.signout} />
         </div>
       </div>
 
