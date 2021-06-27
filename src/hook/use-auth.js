@@ -7,6 +7,7 @@ import {
 import socket from '../service/websocket';
 import firebase from '../service/firebase';
 
+
 const authContext = React.createContext();
 
 export function ProvideAuth({ children }) {
@@ -36,9 +37,16 @@ function useProvideAuth() {
     return unsubcribe;
   }, [])
 
+  useEffect(() => {
+    if (loginState === "loged" && user) {
+      socket.auth = { user };
+      socket.connect();
+    }
+  }, [user, loginState]);
+
   const signin = () => {
     let provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider)
+    firebase.auth().signInWithRedirect(provider)
       .then(() => {
         console.log("Login Success")
       })
@@ -47,9 +55,9 @@ function useProvideAuth() {
       });
   }
 
-  const signout = (cb) => {
-    firebase.auth().signOut().then(() => setUser(null));
-    cb();
+  const signout = () => {
+    firebase.auth().signOut()
+      .then(() => setUser(null));
   }
 
   return {
