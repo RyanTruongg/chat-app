@@ -1,23 +1,15 @@
-import React from 'react';
-
 import ChatboxCard from './ChatboxCard';
 
 const ChatboxList = ({ listData }) => {
   return (
     <div className="chatbox-list">
-      {listData && listData.map(item => <ChatboxCard />)}
-      <ChatboxCard />
-      <ChatboxCard />
-      <ChatboxCard />
-      <ChatboxCard />
-      <ChatboxCard />
-      <ChatboxCard />
-      <ChatboxCard />
-      <ChatboxCard />
-      <ChatboxCard />
-      <ChatboxCard />
-      <ChatboxCard />
-      <ChatboxCard />
+      {listData?.map(({ userID, ...rest }) => 
+        <ChatboxCard
+          key={userID}
+          {...rest}
+          to={"/t/" + userID} 
+        />
+      )}
     </div>
   );
 }
