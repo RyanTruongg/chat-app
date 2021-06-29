@@ -1,11 +1,35 @@
-const httpServer = require('http').createServer();
-const io = require('socket.io')(httpServer, {
+const express = require("express");
+const app = express();
+const httpServer = require("http").createServer(app);
+const options = {
   cors: { origin: "http://localhost:3000" }
+}
+const io = require("socket.io")(httpServer, options);
+const path = require("path");
+require('./db/mongoDB');
+
+httpServer.listen(process.env.PORT || 3001);
+
+// Socket event handlers
+const { createMsg } = require("./socket_event_handlers/msgHandler")(io);
+
+// router
+const apiUserRouter = require('./route/apiUser');
+const apiMessageRouter = require('./route/apiMessage');
+
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.use("/api/user/", apiUserRouter);
+app.use("/api/message", apiMessageRouter);
+
+app.get('*', (req, res) => {
+  const p = path.join(__dirname, 'build', 'index.html');
+  res.sendFile(p);
 });
-const admin = require('./firebaseAdmin');
 
 io.use((socket, next) => {
   const user = socket.handshake.auth.user;
+  console.log()
   if (!user) {
     return next(new Error("invalid user"));
   }
@@ -14,7 +38,8 @@ io.use((socket, next) => {
 });
 
 io.on("connection", (socket) => {
-  console.log(socket.user.displayName, "- connected")
+  console.log(socket.user.uid, "- connected");
+  socket.join(socket.user.uid)
 
   const users = [];
   for (let [id, socket] of io.of("/").sockets) {
@@ -30,26 +55,19 @@ io.on("connection", (socket) => {
     });
   }
   io.emit("users", users);
-  // ...
-  socket.join(socket.user.uid)
 
-  socket.on("private msg", (msg) => {
-    socket.to(msg.to).emit("private msg", msg);
-  });
+  // socket.emit("room:get")
 
-  // socket.on("abc", async (roomId)=> {
-  //   console.log(roomId)
-  //   try {
-  //     const user = await admin.auth().getUser(roomId);
-  //     socket.emit("set roomID info", user.providerData[0])
-  //   } catch(e) {
-  //     console.log(e);
-  //   }
+  socket.on("msg:create", createMsg)
+  // socket.emit("msg:create")
+  // socket.emit("private msg")
 
-  // })
+  socket.onAny((eventName) => {
+    console.log(eventName);
+  })
+
 });
 
 
 
-httpServer.listen(3001);
 
