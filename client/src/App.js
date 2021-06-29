@@ -1,3 +1,5 @@
+import React, { Suspense } from 'react';
+
 import {
   BrowserRouter as Router,
   Route,
@@ -5,14 +7,15 @@ import {
   Redirect
 } from 'react-router-dom';
 
-import Sidebar from './component/Sidebar';
-import Chatbox from './component/Chatbox';
-import Login from './component/Login';
-
 import {
   ProvideAuth,
   PrivateRoute,
 } from './hook/use-auth';
+
+const Sidebar = React.lazy(() => import('./component/Sidebar'));
+const Chatbox = React.lazy(() => import('./component/Chatbox'));
+const Login = React.lazy(() => import('./component/Login'));
+
 
 // import socket from './socket/socket';
 
@@ -23,7 +26,9 @@ function App() {
       <ProvideAuth>
         <Router>
           <Route exact path="/login">
-            <Login />
+            <Suspense fallback={<div>Loading...</div>}>
+              <Login />
+            </Suspense>
           </Route>
 
           <PrivateRoute exact path="/">
@@ -32,16 +37,18 @@ function App() {
 
           <PrivateRoute path="/home">
             <Router>
-              <Sidebar />
+              <Suspense fallback={<div>Loading...</div>}>
+                <Sidebar />
+              </Suspense>
               <Switch>
                 <PrivateRoute exact path="/home/t/:roomID">
-                  <Chatbox />
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <Chatbox />
+                  </Suspense>
                 </PrivateRoute>
               </Switch>
             </Router>
           </PrivateRoute>
-
-
 
         </Router>
       </ProvideAuth>
