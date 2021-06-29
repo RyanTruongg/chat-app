@@ -1,26 +1,24 @@
-import React from 'react';
+import { useRef, useEffect } from 'react';
 
-import Avatar from '../../common/Avatar';
+import Msg from './Msg';
 import('./style.css')
 
-const ChatboxMsgContainer = ({ msgText }) => {
-  msgText = msgText ? msgText : ["Alaba trapasdasdfasfasdfasdfasdfasdfasdfDFSADFASDFASDFSDFSDFSDFDSFSDFSDFSDFSDFSDFSDFSDFSDFSDFSDFSFSDFSDAFSDFASDFASDFASDFASDFASDFSADFASDFASDFASDFASDFASDFASDFASDFASDFASDF", "lorem", "ahaha"]
+const ChatboxMsgContainer = ({ msgList, uid, roomPhotoURL }) => {
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    containerRef.current.scrollTop = containerRef.current.scrollHeight;
+  }, [msgList])
 
   return (
-    <div className="chatbox-msg-container">
-      <div className="msg">
-        <Avatar size="small" />
-        <div className="msg-list">
-          {msgText && msgText.map(msg => <p>{msg}</p>)}
-        </div>
-      </div>
-
-      <div className="msg msg--mine">
-        <Avatar size="small" />
-        <div className="msg-list">
-          {msgText && msgText.map(msg => <p>{msg}</p>)}
-        </div>
-      </div>
+    <div ref={containerRef} className="chatbox-msg-container">
+      {
+        msgList?.map((msg, i) => {
+          let classString = msg?.from === uid ? "msg msg--mine" : "msg";
+          let self = msg?.from === uid;
+          return <Msg roomPhotoURL={roomPhotoURL} self={self} key={i} msgText={msg?.msg} className={classString} />
+        })
+      }
     </div>
   );
 }

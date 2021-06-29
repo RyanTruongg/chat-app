@@ -3,13 +3,13 @@ import React from 'react';
 import Avatar from '../common/Avatar';
 import Button from '../common/Button';
 
-const ChatboxHeader = () => {
+const ChatboxHeader = ({ photoURL, displayName }) => {
   return (
     <div className="chatbox__header">
       <div className="left">
-        <Avatar size="medium" />
+        <Avatar imgSrc={photoURL} size="medium" />
         <div className="chatbox-info">
-          <p className="chatbox-info__name">{"Thanh Nhut"}</p>
+          <p className="chatbox-info__name">{displayName}</p>
           <p className="chatbox-info__status">{"Active now"}</p>
         </div>
       </div>

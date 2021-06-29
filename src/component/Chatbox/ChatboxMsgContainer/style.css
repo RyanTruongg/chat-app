@@ -21,10 +21,13 @@
 .msg-list {
   margin: 0 8px;
   max-width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .msg-list p {
-  max-width: fit-content;
+  max-width: 100%;
   background-color: #eee;
   padding: 8px 16px;
   margin-top: 3px;
@@ -51,13 +54,10 @@
   flex-direction: row-reverse;
 }
 .msg--mine .msg-list {
-  display: flex;
-  flex-direction: column;
   align-items: flex-end;
 }
 
 .msg--mine .msg-list p {
-  max-width: 100%;
   background: var(--pink300);
   color: white;
   border-top-right-radius: 6px;
