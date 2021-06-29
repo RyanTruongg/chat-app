@@ -1,7 +1,8 @@
 import {
   BrowserRouter as Router,
   Route,
-  Switch
+  Switch,
+  Redirect
 } from 'react-router-dom';
 
 import Sidebar from './component/Sidebar';
@@ -26,15 +27,21 @@ function App() {
           </Route>
 
           <PrivateRoute exact path="/">
+            <Redirect to="home" />
+          </PrivateRoute>
+
+          <PrivateRoute path="/home">
             <Router>
               <Sidebar />
               <Switch>
-                <PrivateRoute exact path="/t/:roomID">
+                <PrivateRoute exact path="/home/t/:roomID">
                   <Chatbox />
                 </PrivateRoute>
               </Switch>
             </Router>
           </PrivateRoute>
+
+
 
         </Router>
       </ProvideAuth>
