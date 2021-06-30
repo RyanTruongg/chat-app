@@ -73,7 +73,6 @@ const Chatbox = () => {
 
   }, [pushNewMsg, roomID]);
 
-  // eslint-disable-next-line no-unused-vars
   const groupMsgList = (_msgList) => {
     console.log({ _msgList })
     _msgList = Array.from(_msgList);
@@ -96,7 +95,8 @@ const Chatbox = () => {
       // console.log({ tmp })
 
     }
-    res.push(tmp);
+    if (tmp.from) res.push(tmp);
+
     return res;
   }
 
