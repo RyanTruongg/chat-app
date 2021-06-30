@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server/server.js",
-    "dev": "nodemon server/server.js",
+    "server:start": "nodemon server/server.js",
+    "client:start": "cd client && npm run start",
     "devbuild": "cd client && npm run build && rsync -av --delete build ../server && cd .."
   },
   "keywords": [],
