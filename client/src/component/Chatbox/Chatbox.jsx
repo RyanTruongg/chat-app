@@ -74,7 +74,6 @@ const Chatbox = () => {
   }, [pushNewMsg, roomID]);
 
   const groupMsgList = (_msgList) => {
-    console.log({ _msgList })
     _msgList = Array.from(_msgList);
     let res = []
     let tmp = { from: "", msg: [] }
