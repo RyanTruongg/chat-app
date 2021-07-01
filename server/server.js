@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const httpServer = require("http").createServer(app);
 const options = {
-  cors: { origin: "http://localhost:3000" }
+  cors: { origin: ["http://localhost:3000", "https://competent-banach-c45026.netlify.app"] }
 }
 const io = require("socket.io")(httpServer, options);
 const path = require("path");
@@ -17,15 +17,8 @@ const { createMsg } = require("./socket_event_handlers/msgHandler")(io);
 const apiUserRouter = require('./route/apiUser');
 const apiMessageRouter = require('./route/apiMessage');
 
-app.use(express.static(path.join(__dirname, 'build')));
-
 app.use("/api/user/", apiUserRouter);
 app.use("/api/message", apiMessageRouter);
-
-app.get('*', (req, res) => {
-  const p = path.join(__dirname, 'build', 'index.html');
-  res.sendFile(p);
-});
 
 io.use((socket, next) => {
   const user = socket.handshake.auth.user;
