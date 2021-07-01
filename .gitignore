@@ -8,7 +8,6 @@
 .env
 # dependencies
 /node_modules
-/client
 /.pnp
 .pnp.js
 
@@ -18,6 +17,7 @@
 # production
 client/build
 /.env
+/nodemon.json
 
 # misc
 .DS_Store
