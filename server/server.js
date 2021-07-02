@@ -2,10 +2,15 @@ const express = require("express");
 const app = express();
 const httpServer = require("http").createServer(app);
 const options = {
-  cors: { origin: ["http://localhost:3000", "https://competent-banach-c45026.netlify.app"] }
+  cors: {
+    origin: [
+      "http://localhost:3000",
+      "https://messenger-clone.online/",
+      "https://messenger-clone-ryannt.netlify.app"
+    ]
+  }
 }
 const io = require("socket.io")(httpServer, options);
-const path = require("path");
 require('./db/mongoDB');
 
 httpServer.listen(process.env.PORT || 3001);
