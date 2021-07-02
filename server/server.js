@@ -5,7 +5,7 @@ const options = {
   cors: {
     origin: [
       "http://localhost:3000",
-      "https://messenger-clone.online/",
+      "https://messenger-clone.online",
       "https://messenger-clone-ryannt.netlify.app"
     ]
   }
