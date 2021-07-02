@@ -8,7 +8,7 @@
     "dev": "npm run server:start && npm run client:start",
     "server:start": "nodemon server/server.js",
     "client:start": "cd client && npm run start",
-    "devbuild": "cd client && npm run build && rsync -av --delete build ../server && cd .."
+    "devbuild": "cd client && npm run build && rsync -a build ../server && cd .."
   },
   "keywords": [],
   "author": "",
