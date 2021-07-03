@@ -12,6 +12,8 @@ import {
   PrivateRoute,
 } from './hook/use-auth';
 
+import { ProvideContactList } from './hook/use-contact-list';
+
 const Sidebar = React.lazy(() => import('./component/Sidebar'));
 const Chatbox = React.lazy(() => import('./component/Chatbox'));
 const Login = React.lazy(() => import('./component/Login'));
@@ -36,18 +38,20 @@ function App() {
           </PrivateRoute>
 
           <PrivateRoute path="/home">
-            <Router>
-              <Suspense fallback={<div>Loading...</div>}>
-                <Sidebar />
-              </Suspense>
-              <Switch>
-                <PrivateRoute exact path="/home/t/:roomID">
-                  <Suspense fallback={<div>Loading...</div>}>
-                    <Chatbox />
-                  </Suspense>
-                </PrivateRoute>
-              </Switch>
-            </Router>
+            <ProvideContactList>
+              <Router>
+                <Suspense fallback={<div>Loading...</div>}>
+                  <Sidebar />
+                </Suspense>
+                <Switch>
+                  <PrivateRoute exact path="/home/t/:roomID">
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <Chatbox />
+                    </Suspense>
+                  </PrivateRoute>
+                </Switch>
+              </Router>
+            </ProvideContactList>
           </PrivateRoute>
 
         </Router>

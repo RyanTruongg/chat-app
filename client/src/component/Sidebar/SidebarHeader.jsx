@@ -19,9 +19,9 @@ const SidebarHeader = ({ providerData }) => {
         </div>
 
         <div className="sidebar-top-right">
-          <Button iconName="more_horiz" />
+          <Button iconName="more_horiz" title="More" />
           <Button iconName="add" />
-          <Button iconName="logout" onClick={auth.signout} />
+          <Button iconName="logout" title="Signout" onClick={auth.signout} />
         </div>
       </div>
 

@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useAuth } from '../../hook/use-auth';
+import { useContactList } from '../../hook/use-contact-list';
 import socket from '../../service/websocket';
 
 import ChatboxHeader from './ChatboxHeader';
@@ -18,19 +19,26 @@ const Chatbox = () => {
   const auth = useAuth();
   const uid = auth.user?.uid;
 
+  const { updateContactLastMsg } = useContactList();
+
   const pushNewMsg = useCallback((msg) => {
     let tmp = [...msgList];
     let last = tmp.pop();
+
+    const msgContentAndTime = {
+      timestamp: msg.timestamp,
+      content: msg.content
+    };
     if (!last) {
-      setMsgList([{ from: msg.from, msg: [msg.content] }]);
+      setMsgList([{ from: msg.from, msg: [msgContentAndTime] }]);
       return;
     }
 
     if (last?.from === msg?.from) {
-      last.msg.push(msg.content)
+      last.msg.push(msgContentAndTime)
       tmp.push(last);
     } else {
-      let newMsg = { from: msg.from, msg: [msg.content] }
+      let newMsg = { from: msg.from, msg: [msgContentAndTime] }
       tmp.push(last);
       tmp.push(newMsg)
     }
@@ -61,17 +69,18 @@ const Chatbox = () => {
   }, [roomID, uid])
 
   useEffect(() => {
-    socket.on("private msg", msg => {
-      if (msg.from === roomID) {
-        pushNewMsg(msg);
+    socket.on("private msg", ({ doc }) => {
+      if (doc.from === roomID) {
+        pushNewMsg(doc);
       }
+      updateContactLastMsg(doc.from, doc);
     })
 
     return () => {
       socket.off('private msg');
     }
 
-  }, [pushNewMsg, roomID]);
+  }, [pushNewMsg, roomID, updateContactLastMsg]);
 
   const groupMsgList = (_msgList) => {
     _msgList = Array.from(_msgList);

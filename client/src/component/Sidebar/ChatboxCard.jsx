@@ -5,13 +5,17 @@ import {
 
 import Avatar from '../common/Avatar';
 
+import { useAuth } from '../../hook/use-auth';
+
 const ChatboxCard = (props) => {
   const location = useLocation();
+  const auth = useAuth();
+
   const {
     displayName = "Thanh Nhut",
     photoURL,
-    lastMsg = "Lorem ipsum dolor,adfadf asdfasfafasfsafasfasdfs Tui laf",
-    to
+    msg,
+    to,
   } = props;
 
   return (
@@ -19,7 +23,7 @@ const ChatboxCard = (props) => {
       <Avatar imgSrc={photoURL} size="large" />
       <div className="chatbox-card__info">
         <span style={{ display: "block", fontWeight: "600" }}>{displayName}</span>
-        <span>{lastMsg}</span>
+        <span>{auth.user?.uid === msg?.from ? "You: " + msg?.content : msg?.content}</span>
       </div>
     </Link>
   );

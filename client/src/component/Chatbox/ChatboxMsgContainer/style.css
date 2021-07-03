@@ -37,7 +37,7 @@
   border-bottom-left-radius: 6px;
   border-top-right-radius: 24px;
   border-bottom-right-radius: 24px;
-  transition: 0.2s ease-out 0.2s;
+  transition: margin-bottom 0.2s ease-out 0.2s;
 }
 .msg-list p:first-child {
   border-radius: 24px;

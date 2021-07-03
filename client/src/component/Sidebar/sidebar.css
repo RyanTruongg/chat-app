@@ -94,6 +94,10 @@
   overflow: hidden;
 }
 
+.chatbox-card__info span:last-child{
+  color: #888;
+}
+
 .m-logout {
   display: none;
   position: absolute;

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useContactList } from '../../hook/use-contact-list';
 
 import socket from '../../service/websocket';
 
@@ -8,17 +9,20 @@ import Button from '../common/Button';
 const ChatboxMsgInput = ({ roomID, uid, pushNewMsg }) => {
   const [msg, setMsg] = useState("");
 
+  const { updateContactLastMsg } = useContactList()
+
   useEffect(() => {
-    socket.on("msg:create", ({ success, _doc }) => {
+    socket.on("msg:create", ({ success, doc }) => {
       if (success) {
-        pushNewMsg(_doc);
+        pushNewMsg(doc);
+        updateContactLastMsg(doc.to, doc);
       }
     })
 
     return () => {
       socket.off("msg:create")
     }
-  }, [pushNewMsg])
+  }, [pushNewMsg, updateContactLastMsg])
 
   const sendMsg = (e) => {
     e.preventDefault();
