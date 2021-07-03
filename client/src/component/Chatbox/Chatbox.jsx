@@ -43,7 +43,7 @@ const Chatbox = () => {
     const json = res.then(res => res.json());
     json.then(json => {
       setRoomInfo(json);
-      console.log(json)
+      // console.log(json)
     }).catch(e => {
       console.log(e)
     })
@@ -78,28 +78,29 @@ const Chatbox = () => {
     let res = []
     let tmp = { from: "", msg: [] }
     for (var _msg of _msgList) {
-
+      const msgContentAndTime = {
+        timestamp: _msg.timestamp,
+        content: _msg.content
+      };
       if (tmp.from) {
         if (_msg.from !== tmp.from) {
           res.push(tmp);
-          tmp = { from: _msg.from, msg: [_msg.content] }
+          tmp = { from: _msg.from, msg: [msgContentAndTime] }
         } else {
-
-          tmp.msg.push(_msg.content)
+          tmp.msg.push(msgContentAndTime)
         }
       } else {
         tmp.from = _msg.from;
-        tmp.msg = [_msg.content];
+        tmp.msg = [msgContentAndTime];
       }
       // console.log({ tmp })
-
     }
     if (tmp.from) res.push(tmp);
 
     return res;
   }
 
-  if (roomInfo) {
+  if (roomInfo?.uid === roomID) {
     return (
       <div className="chatbox">
         <ChatboxHeader {...roomInfo} />

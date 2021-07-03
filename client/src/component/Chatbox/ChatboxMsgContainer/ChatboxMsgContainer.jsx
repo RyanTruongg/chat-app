@@ -13,10 +13,19 @@ const ChatboxMsgContainer = ({ msgList, uid, roomPhotoURL }) => {
   return (
     <div ref={containerRef} className="chatbox-msg-container">
       {
-        msgList?.map((msg, i) => {
-          let classString = msg?.from === uid ? "msg msg--mine" : "msg";
-          let self = msg?.from === uid;
-          return <Msg roomPhotoURL={roomPhotoURL} self={self} key={i} msgText={msg?.msg} className={classString} />
+        msgList?.map((msgInfo, i) => {
+
+          let classString = msgInfo?.from === uid ? "msg msg--mine" : "msg";
+          let self = msgInfo?.from === uid;
+          return (
+            <Msg
+              roomPhotoURL={roomPhotoURL}
+              self={self}
+              key={i}
+              msgText={msgInfo?.msg}
+              className={classString}
+            />
+          )
         })
       }
     </div>

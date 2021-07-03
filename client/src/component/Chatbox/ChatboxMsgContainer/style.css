@@ -27,6 +27,7 @@
 }
 
 .msg-list p {
+  position: relative;
   max-width: 100%;
   background-color: #eee;
   padding: 8px 16px;
@@ -36,6 +37,7 @@
   border-bottom-left-radius: 6px;
   border-top-right-radius: 24px;
   border-bottom-right-radius: 24px;
+  transition: 0.2s ease-out 0.2s;
 }
 .msg-list p:first-child {
   border-radius: 24px;
@@ -47,6 +49,24 @@
 }
 .msg-list p:only-child {
   border-radius: 24px;
+}
+
+.msg-list p::after {
+  opacity: 0;
+  content: attr(data-time);
+  width: max-content;
+  position: absolute;
+  margin: 0 16px;
+  left: 0;
+  top: 100%;
+  color: #bbb;
+  transition: ease-out 0.2s 0.2s;
+}
+.msg-list p:hover {
+  margin-bottom: 12px;
+}
+.msg-list p:hover::after {
+  opacity: 1;
 }
 
 .msg--mine {
@@ -75,4 +95,8 @@
 }
 .msg--mine .msg-list p:only-child {
   border-radius: 24px;
+}
+.msg--mine .msg-list p::after {
+  left: unset;
+  right: 0;
 }

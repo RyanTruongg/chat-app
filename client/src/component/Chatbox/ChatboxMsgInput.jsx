@@ -27,7 +27,6 @@ const ChatboxMsgInput = ({ roomID, uid, pushNewMsg }) => {
         from: uid,
         to: roomID,
         content: msg,
-        timestamp: Date.now()
       }
       socket.emit("msg:create", payload);
     }

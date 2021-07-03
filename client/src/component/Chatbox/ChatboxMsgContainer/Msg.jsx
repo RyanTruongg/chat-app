@@ -9,7 +9,12 @@ const Msg = ({ msgText, className, self, roomPhotoURL }) => {
     <div className={className}>
       {!self && <Avatar size="small" imgSrc={roomPhotoURL} />}
       <div className="msg-list">
-        {msgText && msgText.map((msg, i) => <p key={i}>{msg}</p>)}
+        {msgText?.map(({ content, timestamp }, i) => {
+          let localeTimeString = new Date(timestamp).toLocaleString('en-GB', { timeZone: 'UTC' });
+          return (
+            <p key={i} data-time={localeTimeString}>{content}</p>
+          )
+        })}
       </div>
     </div>
   );
