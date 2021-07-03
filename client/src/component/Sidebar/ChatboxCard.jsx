@@ -8,7 +8,7 @@ import Avatar from '../common/Avatar';
 const ChatboxCard = (props) => {
   const location = useLocation();
   const {
-    username = "Thanh Nhut",
+    displayName = "Thanh Nhut",
     photoURL,
     lastMsg = "Lorem ipsum dolor,adfadf asdfasfafasfsafasfasdfs Tui laf",
     to
@@ -18,7 +18,7 @@ const ChatboxCard = (props) => {
     <Link to={to} className={to === location.pathname ? "chatbox-card active" : "chatbox-card"}>
       <Avatar imgSrc={photoURL} size="large" />
       <div className="chatbox-card__info">
-        <span style={{ display: "block", fontWeight: "600" }}>{username}</span>
+        <span style={{ display: "block", fontWeight: "600" }}>{displayName}</span>
         <span>{lastMsg}</span>
       </div>
     </Link>

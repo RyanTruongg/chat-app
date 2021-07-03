@@ -3,11 +3,11 @@ import ChatboxCard from './ChatboxCard';
 const ChatboxList = ({ listData }) => {
   return (
     <div className="chatbox-list">
-      {listData?.map(({ userID, ...rest }) =>
+      {listData?.map(({ uid, ...rest }) =>
         <ChatboxCard
-          key={userID}
+          key={uid}
           {...rest}
-          to={"/home/t/" + userID}
+          to={"/home/t/" + uid}
         />
       )}
     </div>
