@@ -2,15 +2,15 @@ import React from 'react';
 
 const AVATAR_SIZE_STYLES = {
   small: {
-    width: "28px",
-    height: "28px"
+    flex: "0 0 28px",
+    height: "28px",
   },
   medium: {
-    width: "40px",
+    flex: "0 0 40px",
     height: "40px"
   },
   large: {
-    width: "60px",
+    flex: "0 0 60px",
     height: "60px"
   }
 }
