@@ -32,11 +32,13 @@ const useProvideContactList = () => {
   }
 
   useEffect(() => {
-    const res = fetch("/api/pm-list/" + auth.user?.uid);
-    const json = res.then(res => res.json());
-    json.then(data => setContactList(data.users));
-    json.catch(e => console.log(e));
-  }, [auth.user?.uid]);
+    if (auth.user) {
+      const res = fetch("/api/pm-list/" + auth.user?.uid);
+      const json = res.then(res => res.json());
+      json.then(data => setContactList(data.users));
+      json.catch(e => console.log(e));
+    }
+  }, [auth.user, auth.user?.uid]);
 
   return {
     data,

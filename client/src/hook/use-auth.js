@@ -31,6 +31,8 @@ function useProvideAuth() {
       } else {
         setUser(null);
         setLoginState("notloged");
+        socket.disconnect();
+
       }
     })
 
