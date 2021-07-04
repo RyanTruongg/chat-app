@@ -21,14 +21,16 @@
 .chatbox__header .left {
   display: flex;
   align-items: center;
+  overflow: hidden;
 }
 .chatbox-info{
-  padding-left: 16px;
+  padding-left: 12px;
 }
 .chatbox-info__name{
   font-size: 1.8rem;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   font-weight: 600;
+  text-overflow: ellipsis;
 }
 .chatbox-info__status{
   color: #888;
@@ -45,10 +47,11 @@
 .chatbox-msg-input {
   height: 64px;
   width: 100%;
-  padding: 12px 16px;
+  padding: 12px 12px;
 
   box-shadow: var(--shadow);
 }
+
 .chatbox-msg-input form {
   display: flex;
   /* align-items: center; */
@@ -62,7 +65,7 @@
 }
 
 .chatbox-msg-input button{
- padding-left: 8px;
+  margin: 0 8px;
 }
 
 @media only screen and (max-width: 576px){
@@ -71,5 +74,11 @@
   }
   .chatbox__header .right button{
     margin-right: 8px;
+  }
+}
+
+@media only screen and (max-width: 768px){
+  .chatbox-msg-input {
+   padding-left: 48px;
   }
 }

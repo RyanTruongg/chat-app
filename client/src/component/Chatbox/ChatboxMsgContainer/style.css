@@ -2,8 +2,8 @@
   /* max-width: calc(100vw - 360px); */
   max-width: 100%;
   height: calc(100% - 64px - 64px);
-  margin-right: 4px;
-  padding: 0 16px;
+  /* margin-right: 4px; */
+  padding: 0 8px 0 16px;
   overflow: scroll;
   /* background-color: thistle; */
 }
@@ -75,6 +75,7 @@
 }
 .msg--mine .msg-list {
   align-items: flex-end;
+  margin: 1px; 
 }
 
 .msg--mine .msg-list p {
