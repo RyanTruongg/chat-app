@@ -6,7 +6,7 @@ import Button from '../common/Button';
 
 import { useAuth } from '../../hook/use-auth';
 
-const SidebarHeader = ({ providerData }) => {
+const SidebarHeader = ({ providerData, setOpen, open }) => {
   const auth = useAuth();
   const { photoURL } = providerData || {};
 
@@ -22,6 +22,9 @@ const SidebarHeader = ({ providerData }) => {
           <Button iconName="more_horiz" title="More" />
           <Button iconName="add" />
           <Button iconName="logout" title="Signout" onClick={auth.signout} />
+          {
+            open && <Button iconName="arrow_back" color="var(--pink200)" onClick={() => setOpen(false)} />
+          }
         </div>
       </div>
 

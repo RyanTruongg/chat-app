@@ -12,7 +12,7 @@ const ChatboxCard = (props) => {
   const auth = useAuth();
 
   const {
-    displayName = "Thanh Nhut",
+    displayName,
     photoURL,
     msg,
     to,
