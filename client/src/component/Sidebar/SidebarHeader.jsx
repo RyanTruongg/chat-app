@@ -10,6 +10,13 @@ const SidebarHeader = ({ providerData, setOpen, open }) => {
   const auth = useAuth();
   const { photoURL } = providerData || {};
 
+  function reqFullScr() {
+    const root = document.getElementById("root");
+    if (root) {
+      root.requestFullscreen()
+    }
+  }
+
   return (
     <header className="sidebar-header">
       <div className="sidebar-top">
@@ -20,7 +27,7 @@ const SidebarHeader = ({ providerData, setOpen, open }) => {
 
         <div className="sidebar-top-right">
           <Button iconName="more_horiz" title="More" />
-          <Button iconName="add" />
+          <Button iconName="fullscreen" onClick={reqFullScr} />
           <Button iconName="logout" title="Signout" onClick={auth.signout} />
           {
             open && <Button iconName="arrow_back" color="var(--pink200)" onClick={() => setOpen(false)} />
