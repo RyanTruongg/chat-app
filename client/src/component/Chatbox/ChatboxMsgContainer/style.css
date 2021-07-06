@@ -101,3 +101,9 @@
   left: unset;
   right: 0;
 }
+
+@media only screen and (max-width: 576px){
+  .msg-list p {
+    user-select: none;
+  }
+}

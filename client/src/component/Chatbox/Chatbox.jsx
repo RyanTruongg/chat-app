@@ -113,8 +113,14 @@ const Chatbox = () => {
     return (
       <div className="chatbox">
         <ChatboxHeader {...roomInfo} />
-        <ChatboxMsgContainer roomPhotoURL={roomInfo?.photoURL} uid={uid} msgList={msgList} />
-        <ChatboxMsgInput pushNewMsg={pushNewMsg} roomID={roomID} uid={uid} />
+        <ChatboxMsgContainer
+          roomPhotoURL={roomInfo?.photoURL}
+          uid={uid}
+          msgList={msgList} />
+        <ChatboxMsgInput
+          pushNewMsg={pushNewMsg}
+          roomID={roomID}
+          uid={uid} />
       </div>
     );
   } else {
