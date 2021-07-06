@@ -6,8 +6,8 @@ import Button from '../common/Button';
 
 import { useAuth } from '../../hook/use-auth';
 import { useContactList } from '../../hook/use-contact-list';
+import './sidebar.css';
 
-import('./sidebar.css')
 
 const Sidebar = () => {
   const [open, setOpen] = useState(false);

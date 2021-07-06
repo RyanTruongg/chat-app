@@ -9,7 +9,7 @@ import ChatboxHeader from './ChatboxHeader';
 import ChatboxMsgContainer from './ChatboxMsgContainer';
 import ChatboxMsgInput from './ChatboxMsgInput';
 
-import('./chatbox.css');
+import './chatbox.css';
 
 const Chatbox = () => {
   const [roomInfo, setRoomInfo] = useState(null);

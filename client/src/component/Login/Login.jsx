@@ -3,7 +3,7 @@ import { useLocation, Redirect } from 'react-router-dom';
 import {
   useAuth
 } from '../../hook/use-auth';
-import('./login.css')
+import './login.css';
 
 const Login = () => {
   let location = useLocation();

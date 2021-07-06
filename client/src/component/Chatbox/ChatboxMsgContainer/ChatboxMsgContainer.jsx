@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 
 import Msg from './Msg';
-import('./style.css')
+import './style.css';
 
 const ChatboxMsgContainer = ({ msgList, uid, roomPhotoURL }) => {
   const containerRef = useRef(null);
