@@ -16,10 +16,11 @@ const ChatboxCard = (props) => {
     photoURL,
     msg,
     to,
+    setOpen
   } = props;
 
   return (
-    <Link to={to} className={to === location.pathname ? "chatbox-card active" : "chatbox-card"}>
+    <Link onClick={() => setOpen(false)} to={to} className={to === location.pathname ? "chatbox-card active" : "chatbox-card"}>
       <Avatar imgSrc={photoURL} size="large" />
       <div className="chatbox-card__info">
         <span style={{ display: "block", fontWeight: "600" }}>{displayName}</span>

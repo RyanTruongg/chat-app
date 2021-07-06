@@ -86,7 +86,7 @@
 }
 .chatbox-card.active,
 .chatbox-card:hover {
-  background-color: var(--pink);
+  background-color: var(--primary-hover);
 }
 .chatbox-card__info {
   margin-left: 16px;
@@ -127,10 +127,9 @@
     position: absolute;
   }
   .sidebar-open {
-    display: block;
+    display: flex;
   }
   .chatbox-list {
-    /* height: 100vh; */
     margin-right: 0;
   }
   .chatbox-list::-webkit-scrollbar-thumb {
@@ -140,15 +139,10 @@
     width: 0;
   }
   .chatbox-card {
-    /* width: 100%; */
     overflow: hidden;
   }
   .chatbox-card__info {
     text-overflow: ellipsis;
-    /* display: none; */
   }
-  /* .m-logout {
-    display: block;
-  } */
 
 }

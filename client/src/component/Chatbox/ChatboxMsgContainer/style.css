@@ -79,7 +79,7 @@
 }
 
 .msg--mine .msg-list p {
-  background: var(--pink300);
+  background: var(--primary);
   color: white;
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;

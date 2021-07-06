@@ -50,7 +50,7 @@ const ChatboxMsgInput = ({ roomID, uid, pushNewMsg }) => {
           variant="clear"
           size="large"
           iconName="send"
-          color="var(--pink300)"
+          color="var(--primary)"
         />
       </form>
     </div>

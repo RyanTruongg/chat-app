@@ -32,7 +32,7 @@ const Sidebar = () => {
             variant="clear"
             size="large"
             iconName="menu"
-            color="var(--pink300)"
+            color="var(--primary)"
             onClick={() => setOpen(true)}
           />
         )

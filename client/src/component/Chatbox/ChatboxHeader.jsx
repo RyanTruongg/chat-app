@@ -14,9 +14,9 @@ const ChatboxHeader = ({ photoURL, displayName }) => {
         </div>
       </div>
       <div className="right">
-        <Button variant="clear" iconName="phone_in_talk" color="var(--pink300)" />
-        <Button variant="clear" iconName="video_call" color="var(--pink300)" />
-        <Button variant="clear" iconName="more_horiz" color="var(--pink300)" />
+        <Button variant="clear" iconName="phone_in_talk" color="var(--primary)" />
+        <Button variant="clear" iconName="video_call" color="var(--primary)" />
+        <Button variant="clear" iconName="more_horiz" color="var(--primary)" />
       </div>
     </div>
   );

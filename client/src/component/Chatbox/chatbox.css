@@ -54,12 +54,12 @@
 
 .chatbox-msg-input form {
   display: flex;
-  /* align-items: center; */
   height: 100%;
+  padding: 2px 0;
 }
 .chatbox-msg-input input[type="text"] {
   width: 100%;
-  border: 1px solid var(--pink200);
+  border: 1px solid var(--primary);
   border-radius: 32px;
   padding: 0 16px;
 }

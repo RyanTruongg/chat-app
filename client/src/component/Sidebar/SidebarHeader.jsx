@@ -30,7 +30,7 @@ const SidebarHeader = ({ providerData, setOpen, open }) => {
           <Button iconName="fullscreen" onClick={reqFullScr} />
           <Button iconName="logout" title="Signout" onClick={auth.signout} />
           {
-            open && <Button iconName="arrow_back" color="var(--pink200)" onClick={() => setOpen(false)} />
+            open && <Button iconName="arrow_back" color="var(--primary)" onClick={() => setOpen(false)} />
           }
         </div>
       </div>
