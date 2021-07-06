@@ -50,6 +50,10 @@ io.on("connection", (socket) => {
 
 });
 
+io.on("disconnect", socket => {
+  console.log(socket.user?.uid)
+})
+
 
 
 

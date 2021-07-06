@@ -8,7 +8,8 @@ router.get("/:userID", (req, res) => {
       res.json(userRecord);
     })
     .catch(e => {
-      res.status(404);
+      // console.log(e)
+      res.status(404).end();
     })
 
 })
