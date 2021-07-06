@@ -65,17 +65,17 @@
   opacity: 0;
 }
 
-.chatbox-list {
+.room-title__list {
   height: calc(100% - 140px);
   margin-right: 4px;
   padding-top: 16px;
   overflow-y: scroll;
 }
-.chatbox-list:hover::-webkit-scrollbar-thumb {
+.room-title__list:hover::-webkit-scrollbar-thumb {
   background: #bbb;
 }
 
-.chatbox-card {
+.room-title__card {
   height: 72px;
   padding: 6px;
   margin: 0 8px;
@@ -84,11 +84,11 @@
   display: flex;
   align-items: center;
 }
-.chatbox-card.active,
-.chatbox-card:hover {
+.room-title__card.active,
+.room-title__card:hover {
   background-color: var(--primary-hover);
 }
-.chatbox-card__info {
+.room-title__card-info {
   margin-left: 16px;
   max-width: 220px;
 
@@ -115,7 +115,7 @@
   }
 }
 
-.chatbox-card__info span:last-child{
+.room-title__card-info span:last-child{
   color: #888;
 }
 
@@ -130,19 +130,19 @@
   .sidebar-open {
     display: flex;
   }
-  .chatbox-list {
+  .room-title__list {
     margin-right: 0;
   }
-  .chatbox-list::-webkit-scrollbar-thumb {
+  .room-title__list::-webkit-scrollbar-thumb {
     background: #bbb;
   }
-  .chatbox-list::-webkit-scrollbar {
+  .room-title__list::-webkit-scrollbar {
     width: 0;
   }
-  .chatbox-card {
+  .room-title__card {
     overflow: hidden;
   }
-  .chatbox-card__info {
+  .room-title__card-info {
     text-overflow: ellipsis;
   }
 

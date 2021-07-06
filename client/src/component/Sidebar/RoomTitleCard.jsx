@@ -7,7 +7,7 @@ import Avatar from '../common/Avatar';
 
 import { useAuth } from '../../hook/use-auth';
 
-const ChatboxCard = (props) => {
+const RoomTitleCard = (props) => {
   const location = useLocation();
   const auth = useAuth();
 
@@ -20,9 +20,12 @@ const ChatboxCard = (props) => {
   } = props;
 
   return (
-    <Link onClick={() => setOpen(false)} to={to} className={to === location.pathname ? "chatbox-card active" : "chatbox-card"}>
+    <Link
+      onClick={() => setOpen(false)}
+      to={to}
+      className={to === location.pathname ? "room-title__card active" : "room-title__card"}>
       <Avatar imgSrc={photoURL} size="large" />
-      <div className="chatbox-card__info">
+      <div className="room-title__card-info">
         <span style={{ display: "block", fontWeight: "600" }}>{displayName}</span>
         <span>{auth.user?.uid === msg?.from ? "You: " + msg?.content : msg?.content}</span>
       </div>
@@ -30,4 +33,4 @@ const ChatboxCard = (props) => {
   );
 }
 
-export default ChatboxCard;
+export default RoomTitleCard;

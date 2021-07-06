@@ -1,10 +1,10 @@
-import ChatboxCard from './ChatboxCard';
+import RoomTitleCard from './RoomTitleCard';
 
 const ChatboxList = ({ listData, setOpen }) => {
   return (
-    <div className="chatbox-list">
+    <div className="room-title__list">
       {listData?.map(({ uid, ...rest }) => /* uid, displayName, msg */
-        <ChatboxCard
+        <RoomTitleCard
           key={uid}
           {...rest}
           setOpen={setOpen}

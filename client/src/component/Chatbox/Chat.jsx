@@ -5,13 +5,13 @@ import { useAuth } from '../../hook/use-auth';
 import { useContactList } from '../../hook/use-contact-list';
 import socket from '../../service/websocket';
 
-import ChatboxHeader from './ChatboxHeader';
-import ChatboxMsgContainer from './ChatboxMsgContainer';
-import ChatboxMsgInput from './ChatboxMsgInput';
+import ChatHeader from './ChatHeader';
+import ChatMsgContainer from './MsgContainer';
+import MsgForm from './MsgForm';
 
-import './chatbox.css';
+import './chat.css';
 
-const Chatbox = () => {
+const Chat = () => {
   const [roomInfo, setRoomInfo] = useState(null);
   const { roomID } = useParams();
   const [msgList, setMsgList] = useState([]);
@@ -111,13 +111,13 @@ const Chatbox = () => {
 
   if (roomInfo?.uid === roomID) {
     return (
-      <div className="chatbox">
-        <ChatboxHeader {...roomInfo} />
-        <ChatboxMsgContainer
+      <div className="chat">
+        <ChatHeader {...roomInfo} />
+        <ChatMsgContainer
           roomPhotoURL={roomInfo?.photoURL}
           uid={uid}
           msgList={msgList} />
-        <ChatboxMsgInput
+        <MsgForm
           pushNewMsg={pushNewMsg}
           roomID={roomID}
           uid={uid} />
@@ -130,4 +130,4 @@ const Chatbox = () => {
 
 }
 
-export default Chatbox;
+export default Chat;

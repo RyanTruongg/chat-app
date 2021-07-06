@@ -6,7 +6,7 @@ import socket from '../../service/websocket';
 
 import Button from '../common/Button';
 
-const ChatboxMsgInput = ({ roomID, uid, pushNewMsg }) => {
+const MsgForm = ({ roomID, uid, pushNewMsg }) => {
   const [msg, setMsg] = useState("");
 
   const { updateContactLastMsg } = useContactList()
@@ -38,7 +38,7 @@ const ChatboxMsgInput = ({ roomID, uid, pushNewMsg }) => {
   }
 
   return (
-    <div className="chatbox-msg-input">
+    <div className="msg-form">
       <form onSubmit={sendMsg}>
         <input
           type="text"
@@ -57,4 +57,4 @@ const ChatboxMsgInput = ({ roomID, uid, pushNewMsg }) => {
   );
 }
 
-export default ChatboxMsgInput;
+export default MsgForm;

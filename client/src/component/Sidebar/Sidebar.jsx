@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import SidebarHeader from './SidebarHeader';
-import ChatboxList from './ChatboxList';
+import RoomTitleList from './RoomTitleList';
 import Button from '../common/Button';
 
 import { useAuth } from '../../hook/use-auth';
@@ -22,7 +22,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar" style={{ transform: open && "translateX(0px)" }}>
       <SidebarHeader open={open} setOpen={setOpen} providerData={auth.user?.providerData[0]} />
-      <ChatboxList setOpen={setOpen} listData={contactList.data} />
+      <RoomTitleList setOpen={setOpen} listData={contactList.data} />
 
       {
         !open && (

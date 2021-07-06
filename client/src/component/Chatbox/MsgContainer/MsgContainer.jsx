@@ -1,9 +1,9 @@
 import { useRef, useEffect } from 'react';
 
-import Msg from './Msg';
-import './style.css';
+import MsgBlock from './MsgBlock';
+import './msg_container.css';
 
-const ChatboxMsgContainer = ({ msgList, uid, roomPhotoURL }) => {
+const MsgContainer = ({ msgList, uid, roomPhotoURL }) => {
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -18,12 +18,12 @@ const ChatboxMsgContainer = ({ msgList, uid, roomPhotoURL }) => {
           let classString = msgInfo?.from === uid ? "msg msg--mine" : "msg";
           let self = msgInfo?.from === uid;
           return (
-            <Msg
-              roomPhotoURL={roomPhotoURL}
+            <MsgBlock
+              className={classString}
               self={self}
+              roomPhotoURL={roomPhotoURL}
               key={i}
               msgText={msgInfo?.msg}
-              className={classString}
             />
           )
         })
@@ -32,4 +32,4 @@ const ChatboxMsgContainer = ({ msgList, uid, roomPhotoURL }) => {
   );
 }
 
-export default ChatboxMsgContainer;
+export default MsgContainer;

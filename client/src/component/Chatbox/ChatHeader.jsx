@@ -3,14 +3,14 @@ import React from 'react';
 import Avatar from '../common/Avatar';
 import Button from '../common/Button';
 
-const ChatboxHeader = ({ photoURL, displayName }) => {
+const ChatHeader = ({ photoURL, displayName }) => {
   return (
-    <div className="chatbox__header">
+    <div className="chat__header">
       <div className="left">
         <Avatar imgSrc={photoURL} size="medium" />
-        <div className="chatbox-info">
-          <p className="chatbox-info__name">{displayName}</p>
-          <p className="chatbox-info__status">{"Active now"}</p>
+        <div className="chat-info">
+          <p className="chat-info__name">{displayName}</p>
+          <p className="chat-info__status">{"Active now"}</p>
         </div>
       </div>
       <div className="right">
@@ -22,4 +22,4 @@ const ChatboxHeader = ({ photoURL, displayName }) => {
   );
 }
 
-export default ChatboxHeader;
+export default ChatHeader;
