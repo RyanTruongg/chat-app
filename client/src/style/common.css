@@ -10,9 +10,6 @@
   --font: Arial, sans-serif;
   --gradient: linear-gradient(140deg, #fbb7e0, #a09dfb);
   --shadow: 0 0 15px 0 rgba(0,0,0,0.15);
-  --pink: #FFF0E6;
-  --pink200: #efadce;
-  --pink300: #e685b5;
   --white: white;
   --text-color: var(--gray);
 }

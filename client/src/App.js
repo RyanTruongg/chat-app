@@ -15,7 +15,7 @@ import {
 import { ProvideContactList } from './hook/use-contact-list';
 
 const Sidebar = React.lazy(() => import('./component/Sidebar'));
-const Chatbox = React.lazy(() => import('./component/Chatbox'));
+const Chat = React.lazy(() => import('./component/Chat'));
 const Login = React.lazy(() => import('./component/Login'));
 
 
@@ -46,7 +46,7 @@ function App() {
                 <Switch>
                   <PrivateRoute exact path="/home/t/:roomID">
                     <Suspense fallback={<div>Loading...</div>}>
-                      <Chatbox />
+                      <Chat />
                     </Suspense>
                   </PrivateRoute>
                 </Switch>
