@@ -11,7 +11,8 @@ const MsgBlock = ({ msgText, className, self, roomPhotoURL }) => {
       <div className="msg-list">
         {msgText?.map(
           ({ content, timestamp }, i) => {
-            let localeTimeString = new Date(timestamp).toLocaleString('en-GB', { timeZone: 'UTC' });
+            let date = new Date(timestamp - new Date().getTimezoneOffset() * 60000);
+            let localeTimeString = date.toLocaleString('en-GB', { timeZone: 'UTC' });
             return (
               <p key={i} data-time={localeTimeString}>
                 {content}
