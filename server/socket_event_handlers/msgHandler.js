@@ -4,13 +4,12 @@ module.exports = (io) => {
   const createMsg = function (payload) {
     const socket = this;
     const { from, to, content } = payload;
-    const UTC = Date.now() + new Date().getTimezoneOffset() * 60 * 1000;
-    const timestampGMT7 = UTC + 7 * 60 * 60 * 1000;
+    const UTC = Date.now();
     let doc = new Message({
       from: from,
       to: to,
       content: content,
-      timestamp: timestampGMT7
+      timestamp: UTC
     })
 
     doc.save((err, doc) => {
