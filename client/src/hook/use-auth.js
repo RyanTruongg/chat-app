@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom';
 
 import socket from '../service/websocket';
-import firebase from '../service/firebase';
+// import firebase from '../service/firebase';
 
 
 const authContext = React.createContext();
@@ -24,18 +24,20 @@ function useProvideAuth() {
   const [loginState, setLoginState] = useState("listening");
 
   useEffect(() => {
-    const unsubcribe = firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        setUser(user);
-        setLoginState("loged");
-      } else {
-        setUser(null);
-        setLoginState("notloged");
-        socket.disconnect();
+    let unsubcribe = null;
+    import('../service/firebase').then(({ default: firebase }) => {
+      unsubcribe = firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          setUser(user);
+          setLoginState("loged");
+        } else {
+          setUser(null);
+          setLoginState("notloged");
+          socket.disconnect();
 
-      }
+        }
+      })
     })
-
     return unsubcribe;
   }, [])
 
@@ -47,19 +49,24 @@ function useProvideAuth() {
   }, [user, loginState]);
 
   const signin = () => {
-    let provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithRedirect(provider)
-      .then(() => {
-        console.log("Login Success")
-      })
-      .catch(() => {
-        console.log("Login Failed");
-      });
+    import('../service/firebase').then(({ default: firebase }) => {
+      let provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithRedirect(provider)
+        .then(() => {
+          console.log("Login Success")
+        })
+        .catch(() => {
+          console.log("Login Failed");
+        });
+    })
+
   }
 
   const signout = () => {
-    firebase.auth().signOut()
-      .then(() => setUser(null));
+    import('../service/firebase').then(({ default: firebase }) => {
+      firebase.auth().signOut()
+        .then(() => setUser(null));
+    })
   }
 
   return {
