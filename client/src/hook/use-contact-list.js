@@ -28,14 +28,19 @@ const useProvideContactList = () => {
         }
       }
     )
-    setContactList(updated);
+    setContactList(sortByTimestamp(updated));
+  }
+
+  function sortByTimestamp(data) {
+    let tmp = [...data].sort((a, b) => b.msg.timestamp - a.msg.timestamp);
+    return tmp;
   }
 
   useEffect(() => {
     if (auth.user) {
       const res = fetch("/api/pm-list/" + auth.user?.uid);
       const json = res.then(res => res.json());
-      json.then(data => setContactList(data.users));
+      json.then(data => setContactList(sortByTimestamp(data.users)));
       json.catch(e => console.log(e));
     }
   }, [auth.user, auth.user?.uid]);
