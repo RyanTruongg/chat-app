@@ -16,7 +16,7 @@ require('./db/mongoDB');
 httpServer.listen(process.env.PORT || 3001);
 
 // Socket event handlers
-const { createMsg } = require("./socket_event_handlers/msgHandler")(io);
+const { createMsg } = require("./socketio/msgHandler")(io);
 
 // router
 const apiUserRouter = require('./route/apiUser');
