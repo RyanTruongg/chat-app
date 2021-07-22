@@ -3,7 +3,6 @@ import React, { Suspense } from 'react';
 import {
   BrowserRouter as Router,
   Route,
-  Switch,
   Redirect
 } from 'react-router-dom';
 
@@ -14,9 +13,8 @@ import {
 
 import { ProvideContactList } from './hook/use-contact-list';
 
-const Sidebar = React.lazy(() => import('./component/Sidebar'));
-const Chat = React.lazy(() => import('./component/Chat'));
-const Login = React.lazy(() => import('./component/Login'));
+const Main = React.lazy(() => import('./pages/Main'));
+const Login = React.lazy(() => import('./pages/Login'));
 
 
 // import socket from './socket/socket';
@@ -39,18 +37,9 @@ function App() {
 
           <PrivateRoute path="/home">
             <ProvideContactList>
-              <Router>
-                <Suspense fallback={<div>Loading...</div>}>
-                  <Sidebar />
-                </Suspense>
-                <Switch>
-                  <PrivateRoute exact path="/home/t/:roomID">
-                    <Suspense fallback={<div>Loading...</div>}>
-                      <Chat />
-                    </Suspense>
-                  </PrivateRoute>
-                </Switch>
-              </Router>
+              <Suspense fallback={<div>Loading...</div>}>
+                <Main />
+              </Suspense>
             </ProvideContactList>
           </PrivateRoute>
 
