@@ -21,11 +21,11 @@ const { createMsg } = require("./socketio/msgHandler")(io);
 // router
 const apiUserRouter = require('./route/apiUser');
 const apiMessageRouter = require('./route/apiMessage');
-const apiPmListRouter = require('./route/apiPmList');
+const apiPmListRouter = require('./route/apiContacts');
 
 app.use("/api/user/", apiUserRouter);
 app.use("/api/message/", apiMessageRouter);
-app.use("/api/pm-list/", apiPmListRouter);
+app.use("/api/contacts/", apiPmListRouter);
 
 io.use((socket, next) => {
   const user = socket.handshake.auth.user;
