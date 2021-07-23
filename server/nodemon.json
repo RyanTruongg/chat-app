@@ -1,5 +1,6 @@
 {
   "events": {
-    "crash": "sh -c 'lsof -i :${-3001} -t | xargs kill'"
+    "restart": "sudo kill -9 $(sudo lsof -t -i:3001)",
+    "crash": "sudo kill -9 $(sudo lsof -t -i:3001)"
   }
 }
