@@ -13,7 +13,7 @@ function calcTimePassed(time) {
   let timeString = "Just now";
   for (let unit in t) {
     if (t[unit] > 0)
-      timeString = t[unit] + unit[0];
+      timeString = `${t[unit]} ${t[unit] > 1 ? unit : unit.split('s')[0]}`;
     else return timeString;
   }
 
