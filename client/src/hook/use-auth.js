@@ -24,9 +24,8 @@ function useProvideAuth() {
   const [loginState, setLoginState] = useState("listening");
 
   useEffect(() => {
-    let unsubcribe = null;
-    import('../service/firebase').then(({ default: firebase }) => {
-      unsubcribe = firebase.auth().onAuthStateChanged((user) => {
+    const unsubcribe = import('../service/firebase').then(({ default: firebase }) => {
+      const unsubcribe = firebase.auth().onAuthStateChanged((user) => {
         if (user) {
           setUser(user);
           setLoginState("loged");
@@ -34,8 +33,8 @@ function useProvideAuth() {
           setUser(null);
           setLoginState("notloged");
           socket.disconnect();
-
         }
+        return unsubcribe;
       })
     })
     return unsubcribe;
@@ -43,8 +42,14 @@ function useProvideAuth() {
 
   useEffect(() => {
     if (loginState === "loged" && user) {
-      socket.auth = { user };
-      socket.connect();
+      import('../service/firebase')
+        .then(({ default: firebase }) => {
+          firebase.auth().currentUser.getIdToken(true)
+            .then((idToken) => {
+              socket.auth = { idToken };
+              socket.connect();
+            });
+        })
     }
   }, [user, loginState]);
 
@@ -85,7 +90,7 @@ export function PrivateRoute({ children, ...rest }) {
       render={({ location }) => {
         switch (auth.loginState) {
           case "listening":
-            return (<p>Loading...</p>);
+            return (<p>Authenticating...</p>);
           case "loged":
             return (children);
           case "notloged":

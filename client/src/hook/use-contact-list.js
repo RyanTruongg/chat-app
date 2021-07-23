@@ -38,10 +38,18 @@ const useProvideContactList = () => {
 
   useEffect(() => {
     if (auth.user) {
-      const res = fetch("/api/pm-list/" + auth.user?.uid);
-      const json = res.then(res => res.json());
-      json.then(data => setContactList(sortByTimestamp(data.users)));
-      json.catch(e => console.log(e));
+      import('../service/firebase')
+        .then(({ default: firebase }) => {
+          firebase.auth().currentUser.getIdToken(true)
+            .then((idToken) => {
+              const headers = { 'Authorization': 'Bearer ' + idToken }
+              const url = "/api/contacts/" + auth.user?.uid;
+              fetch(url, { headers })
+                .then(res => res.json())
+                .then(json => setContactList(sortByTimestamp(json.users)))
+                .catch(e => console.log(e));
+            });
+        })
     }
   }, [auth.user, auth.user?.uid]);
 

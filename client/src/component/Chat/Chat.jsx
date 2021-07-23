@@ -60,14 +60,22 @@ const Chat = () => {
   }, [roomID]);
 
   useEffect(() => {
-    const res = fetch(`/api/message?from=${uid}&to=${roomID}`);
-    const json = res.then(res => res.json());
-    json.then(json => {
-      const sorted = [...json].sort((a, b) => a.timestamp - b.timestamp);
-      const group = groupMsgList(sorted);
-      setMsgList(group)
-    })
-
+    import('../../service/firebase')
+      .then(({ default: firebase }) => {
+        firebase.auth().currentUser.getIdToken(true)
+          .then((idToken) => {
+            const headers = { 'Authorization': 'Bearer ' + idToken }
+            const url = `/api/message?from=${uid}&to=${roomID}`;
+            fetch(url, { headers })
+              .then(res => res.json())
+              .then(json => {
+                const sorted = [...json].sort((a, b) => a.timestamp - b.timestamp);
+                const group = groupMsgList(sorted);
+                setMsgList(group)
+              })
+              .catch(e => console.log(e));
+          });
+      })
   }, [roomID, uid])
 
   useEffect(() => {
@@ -101,8 +109,6 @@ const Chat = () => {
   } else {
     return <p>Loading...</p>
   }
-
-
 }
 
 export default Chat;
