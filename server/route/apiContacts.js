@@ -3,21 +3,16 @@ const Message = require('../model/Message');
 const router = require('express').Router();
 const admin = require('../firebase/firebaseAdmin');
 
+const requireAuth = require('../middlewares/requireAuth')
+
+router.use('/*', requireAuth);
+
 router.get("/:userID", async (req, res) => {
   const { userID } = req.params;
-  const jwt = req.get('Authorization')?.split(' ')[1];
-  if (!jwt) res.status(401).send('Unauthorized');
-  admin
-  .auth()
-  .verifyIdToken(jwt)
-  .then((decodedToken) => {
-    const uid = decodedToken.uid;
-    if (uid !== userID) res.status(401).send('Unauthorized');
-  })
-  .catch((error) => {
-    res.status(401).send('Unauthorized');
-  });
+  const decodedToken = req.decodedToken;
 
+  if (decodedToken.uid !== userID) res.status(401).send('Unauthorized');
+  
   try {
     const a = await Message.find({ from: userID }).distinct('to').exec();
     const b = await Message.find({ to: userID }).distinct('from').exec();
@@ -44,7 +39,7 @@ router.get("/:userID", async (req, res) => {
     });
   } catch (e) {
     console.log(e);
-    res.status(404)
+    res.status(404).send('Not Found');
   }
 })
 
