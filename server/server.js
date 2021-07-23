@@ -21,19 +21,34 @@ const { createMsg } = require("./socketio/msgHandler")(io);
 // router
 const apiUserRouter = require('./route/apiUser');
 const apiMessageRouter = require('./route/apiMessage');
-const apiPmListRouter = require('./route/apiContacts');
+const apiContactsRouter = require('./route/apiContacts');
 
 app.use("/api/user/", apiUserRouter);
 app.use("/api/message/", apiMessageRouter);
-app.use("/api/contacts/", apiPmListRouter);
+app.use("/api/contacts/", apiContactsRouter);
+
+const admin = require('./firebase/firebaseAdmin');
 
 io.use((socket, next) => {
-  const user = socket.handshake.auth.user;
-  if (!user) {
+  const idToken = socket.handshake.auth.idToken;
+
+  if (!idToken) {
     return next(new Error("invalid user"));
+  } else {
+    admin
+      .auth()
+      .verifyIdToken(idToken)
+      .then((decodedToken) => {
+        socket.user = decodedToken;
+        next();
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(401).send('Unauthorized');
+        next(error);
+      });
   }
-  socket.user = user;
-  next();
+
 });
 
 io.on("connection", (socket) => {
