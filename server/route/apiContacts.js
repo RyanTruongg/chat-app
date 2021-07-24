@@ -1,4 +1,5 @@
 const Message = require('../model/Message');
+const UserContact = require('../model/UserContact');
 
 const router = require('express').Router();
 const admin = require('../firebase/firebaseAdmin');
@@ -12,7 +13,7 @@ router.get("/:userID", async (req, res) => {
   const decodedToken = req.decodedToken;
 
   if (decodedToken.uid !== userID) res.status(401).send('Unauthorized');
-  
+
   try {
     const a = await Message.find({ from: userID }).distinct('to').exec();
     const b = await Message.find({ to: userID }).distinct('from').exec();
@@ -42,5 +43,13 @@ router.get("/:userID", async (req, res) => {
     res.status(404).send('Not Found');
   }
 })
+
+router.post('/', (req, res) => {
+  const doc = new UserContact({ uid: req.body.uid, contacts: [] });
+  doc.save((err, doc) => {
+    if (err) res.sendStatus(501);
+    res.sendStatus(200);
+  });
+});
 
 module.exports = router;
