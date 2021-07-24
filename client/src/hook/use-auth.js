@@ -41,10 +41,36 @@ function useProvideAuth() {
   }, [])
 
   useEffect(() => {
+    import('../service/firebase').then(({ default: firebase }) => {
+      firebase.auth().getRedirectResult()
+        .then((result) => {
+          const isNewUser = result.additionalUserInfo.isNewUser;
+          if (isNewUser) {
+            firebase.auth().currentUser?.getIdToken(true)
+            .then((idToken) => {
+              const res = fetch('/api/contacts', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer ' + idToken
+                },
+                body: JSON.stringify({ uid: result.user.uid})
+              });
+  
+              res.catch(e => console.log(e));
+            });
+          }
+        }).catch((error) => {
+
+        });
+    })
+  }, []);
+
+  useEffect(() => {
     if (loginState === "loged" && user) {
       import('../service/firebase')
         .then(({ default: firebase }) => {
-          firebase.auth().currentUser.getIdToken(true)
+          firebase.auth().currentUser?.getIdToken(true)
             .then((idToken) => {
               socket.auth = { idToken };
               socket.connect();
@@ -56,13 +82,7 @@ function useProvideAuth() {
   const signin = () => {
     import('../service/firebase').then(({ default: firebase }) => {
       let provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithRedirect(provider)
-        .then(() => {
-          console.log("Login Success")
-        })
-        .catch(() => {
-          console.log("Login Failed");
-        });
+      firebase.auth().signInWithRedirect(provider);
     })
 
   }
