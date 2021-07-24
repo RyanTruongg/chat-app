@@ -13,6 +13,9 @@ const options = {
 const io = require("socket.io")(httpServer, options);
 require('./db/mongoDB');
 
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
 httpServer.listen(process.env.PORT || 3001);
 
 // Socket event handlers
