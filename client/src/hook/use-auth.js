@@ -7,7 +7,6 @@ import {
 import socket from '../service/websocket';
 // import firebase from '../service/firebase';
 
-
 const authContext = React.createContext();
 
 export function ProvideAuth({ children }) {
@@ -47,18 +46,17 @@ function useProvideAuth() {
           const isNewUser = result.additionalUserInfo.isNewUser;
           if (isNewUser) {
             firebase.auth().currentUser?.getIdToken(true)
-            .then((idToken) => {
-              const res = fetch('/api/contacts', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': 'Bearer ' + idToken
-                },
-                body: JSON.stringify({ uid: result.user.uid})
+              .then((idToken) => {
+                const res = fetch('/api/user', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + idToken
+                  },
+                  body: JSON.stringify({ uid: result.user.uid })
+                });
+                res.catch(e => console.log(e));
               });
-  
-              res.catch(e => console.log(e));
-            });
           }
         }).catch((error) => {
 
@@ -84,7 +82,6 @@ function useProvideAuth() {
       let provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithRedirect(provider);
     })
-
   }
 
   const signout = () => {
