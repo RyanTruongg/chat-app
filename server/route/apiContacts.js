@@ -1,5 +1,5 @@
 const Message = require('../model/Message');
-const UserContact = require('../model/UserContact');
+const User = require('../model/User');
 
 const router = require('express').Router();
 const admin = require('../firebase/firebaseAdmin');
@@ -15,41 +15,19 @@ router.get("/:userID", async (req, res) => {
   if (decodedToken.uid !== userID) res.status(401).send('Unauthorized');
 
   try {
-    const a = await Message.find({ from: userID }).distinct('to').exec();
-    const b = await Message.find({ to: userID }).distinct('from').exec();
+    let user = await User.findOne({ uid: userID }).exec();
+    let contacts = user.contacts;
 
-    const unique = [...new Set([...a, ...b])];
-    const usersID = unique.map(uid => { return { uid: uid } });
-    let data = await admin.auth().getUsers(usersID);
-    const promise = data.users.map(
-      async (user) => {
-        const a = await Message.findOne({ from: user.uid, to: userID }).sort({ timestamp: -1 });
-        const b = await Message.findOne({ from: userID, to: user.uid }).sort({ timestamp: -1 });
-
-        let lastMsg = {};
-        if (a && b) {
-          lastMsg = a?.timestamp >= b?.timestamp ? a : b;
-        } else {
-          lastMsg = a ? a : b;
-        }
-        return { ...user, msg: lastMsg }
-      }
-    )
-    Promise.all(promise).then(value => {
-      res.json({ users: value })
-    });
+    let json = contacts.map(async (contact) => {
+      let { displayName, photoURL } = await User.findOne({ uid: contact.contactID }).exec()
+      let { seen, contactID, lastMsg } = contact;
+      return { seen, contactID, lastMsg, displayName, photoURL }
+    })
+    Promise.all(json).then(contacts => res.json(contacts))
   } catch (e) {
     console.log(e);
-    res.status(404).send('Not Found');
+    res.sendStatus(404);
   }
 })
-
-router.post('/', (req, res) => {
-  const doc = new UserContact({ uid: req.body.uid, contacts: [] });
-  doc.save((err, doc) => {
-    if (err) res.sendStatus(501);
-    res.sendStatus(200);
-  });
-});
 
 module.exports = router;
