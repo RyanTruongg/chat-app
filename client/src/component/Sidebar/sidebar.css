@@ -97,6 +97,9 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
+.room-title__card-info p {
+  font-weight: 600;
+}
 
 .sidebar-open {
   position: absolute;

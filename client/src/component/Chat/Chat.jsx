@@ -21,7 +21,7 @@ const Chat = () => {
   const auth = useAuth();
   const uid = auth.user?.uid;
 
-  const { updateContactLastMsg } = useContactList();
+  const { updateContact } = useContactList();
 
   const pushNewMsg = useCallback((msg) => {
     let tmp = [...msgList];
@@ -62,7 +62,7 @@ const Chat = () => {
   useEffect(() => {
     import('../../service/firebase')
       .then(({ default: firebase }) => {
-        firebase.auth().currentUser.getIdToken(true)
+        firebase.auth().currentUser?.getIdToken(true)
           .then((idToken) => {
             const headers = { 'Authorization': 'Bearer ' + idToken }
             const url = `/api/message?from=${uid}&to=${roomID}`;
@@ -79,18 +79,18 @@ const Chat = () => {
   }, [roomID, uid])
 
   useEffect(() => {
-    socket.on("private msg", ({ doc }) => {
+    socket.on("private msg", ({ doc, contact }) => {
       if (doc.from === roomID) {
         pushNewMsg(doc);
       }
-      updateContactLastMsg(doc.from, doc);
+      updateContact(contact);
     })
 
     return () => {
       socket.off('private msg');
     }
 
-  }, [pushNewMsg, roomID, updateContactLastMsg]);
+  }, [pushNewMsg, roomID, updateContact]);
 
   if (roomInfo?.uid === roomID) {
     return (

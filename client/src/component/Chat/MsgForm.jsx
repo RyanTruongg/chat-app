@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useContactList } from '../../hook/use-contact-list';
 
 import socket from '../../service/websocket';
@@ -9,20 +9,7 @@ import Button from '../common/Button';
 const MsgForm = ({ roomID, uid, pushNewMsg }) => {
   const [msg, setMsg] = useState("");
 
-  const { updateContactLastMsg } = useContactList()
-
-  useEffect(() => {
-    socket.on("msg:create", ({ success, doc }) => {
-      if (success) {
-        pushNewMsg(doc);
-        updateContactLastMsg(doc.to, doc);
-      }
-    })
-
-    return () => {
-      socket.off("msg:create")
-    }
-  }, [pushNewMsg, updateContactLastMsg])
+  const { updateContact } = useContactList();
 
   const sendMsg = (e) => {
     e.preventDefault();
@@ -32,7 +19,10 @@ const MsgForm = ({ roomID, uid, pushNewMsg }) => {
         to: roomID,
         content: msg,
       }
-      socket.emit("msg:create", payload);
+      socket.emit("msg:create", payload, ({ doc, contact }) => {
+        pushNewMsg(doc);
+        updateContact(contact);
+      });
     }
     setMsg("");
   }

@@ -5,6 +5,7 @@
   /* margin-right: 4px; */
   padding: 0 8px 0 16px;
   overflow: scroll;
+  overflow-x: hidden;
   /* background-color: thistle; */
 }
 .chatbox-msg-container:hover::-webkit-scrollbar-thumb {

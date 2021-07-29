@@ -3,13 +3,13 @@ import RoomTitleCard from './RoomTitleCard';
 const ChatboxList = ({ listData, setOpen }) => {
   return (
     <div className="room-title__list">
-      {listData?.map(({ uid, ...rest }) => /* uid, displayName, msg */
+      {listData?.map(({ contactID, ...rest }) => /* contactID, displayName, msg */
         <RoomTitleCard
-          key={uid}
+          key={contactID}
           {...rest}
+          to={"/home/t/" + contactID}
+          contactID={contactID}
           setOpen={setOpen}
-          to={"/home/t/" + uid}
-          uid={uid}
         />
       )}
     </div>
