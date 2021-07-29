@@ -20,7 +20,7 @@ const useProvideContactList = () => {
 
   const updateContact = (contact) => {
     let updated = [];
-    if (data.some(e => e.contactID = contact.contactID)) {
+    if (data.some(e => e.contactID === contact.contactID)) {
       updated = [...data].map(currContact => {
         if (currContact.contactID === contact.contactID) return contact;
         return currContact
@@ -29,6 +29,30 @@ const useProvideContactList = () => {
       updated = [...data, contact]
     }
     setContactList(sortByTimestamp(updated));
+  }
+
+  const updateSeen = (contactID) => {
+    let updated = data.map(currContact => {
+      if (currContact.contactID === contactID) {
+        if (!currContact.seen) {
+          let body = {
+            contactID: contactID,
+            userID: auth.user?.uid,
+          }
+          fetch('/api/contacts/update-seen', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          })
+            .catch(e => console.log(e))
+        }
+        return { ...currContact, seen: true }
+      }
+      return currContact;
+    })
+    setContactList(updated);
+
+
   }
 
   function sortByTimestamp(data) {
@@ -56,7 +80,8 @@ const useProvideContactList = () => {
   return {
     data,
     setContactList,
-    updateContact
+    updateContact,
+    updateSeen
   }
 }
 

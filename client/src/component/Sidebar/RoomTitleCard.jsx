@@ -6,11 +6,13 @@ import {
 
 import Avatar from '../common/Avatar';
 import { useAuth } from '../../hook/use-auth';
+import { useContactList } from '../../hook/use-contact-list';
 
 import calcTimePassed from '../../helpers/calcTimePassed';
 
-const RoomTitleCard = ({ seen, lastMsg, ...props }) => {
+const RoomTitleCard = ({ seen, lastMsg, contactID, ...props }) => {
   const [timePassed, setTimePassed] = useState(calcTimePassed(lastMsg.timestamp));
+  const { updateSeen } = useContactList();
   const location = useLocation();
   const auth = useAuth();
 
@@ -29,9 +31,14 @@ const RoomTitleCard = ({ seen, lastMsg, ...props }) => {
     return () => clearInterval(interval);
   }, [lastMsg.timestamp])
 
+  const handleClick = () => {
+    updateSeen(contactID)
+    setOpen(false);
+  }
+
   return (
     <Link
-      onClick={() => setOpen(false)}
+      onClick={handleClick}
       to={to}
       className={to === location.pathname ? "room-title__card active" : "room-title__card"}>
 
