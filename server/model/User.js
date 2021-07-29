@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const userContactSchema = new Schema({
+const userSchema = new Schema({
   uid: String,
+  displayName: String,
+  photoURL: String,
   contacts: [{
     contactID: String,
     seen: Boolean,
@@ -14,6 +16,6 @@ const userContactSchema = new Schema({
   }]
 });
 
-const UserContact = mongoose.model('UserContact', userContactSchema);
+const User = mongoose.model('User', userSchema);
 
-module.exports = UserContact;
+module.exports = User;
