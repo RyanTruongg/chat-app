@@ -18,21 +18,21 @@ const useProvideContactList = () => {
 
   const auth = useAuth();
 
-  const updateContactLastMsg = (contactID, msg) => {
-    const updated = data?.map(
-      (contact) => {
-        if (contact.uid === contactID) {
-          return { ...contact, msg: msg };
-        } else {
-          return contact
-        }
-      }
-    )
+  const updateContact = (contact) => {
+    let updated = [];
+    if (data.some(e => e.contactID = contact.contactID)) {
+      updated = [...data].map(currContact => {
+        if (currContact.contactID === contact.contactID) return contact;
+        return currContact
+      })
+    } else {
+      updated = [...data, contact]
+    }
     setContactList(sortByTimestamp(updated));
   }
 
   function sortByTimestamp(data) {
-    let tmp = [...data].sort((a, b) => b.msg.timestamp - a.msg.timestamp);
+    let tmp = [...data].sort((a, b) => b.lastMsg.timestamp - a.lastMsg.timestamp);
     return tmp;
   }
 
@@ -46,7 +46,7 @@ const useProvideContactList = () => {
               const url = "/api/contacts/" + auth.user?.uid;
               fetch(url, { headers })
                 .then(res => res.json())
-                .then(json => setContactList(sortByTimestamp(json.users)))
+                .then(json => setContactList(sortByTimestamp(json)))
                 .catch(e => console.log(e));
             });
         })
@@ -56,7 +56,7 @@ const useProvideContactList = () => {
   return {
     data,
     setContactList,
-    updateContactLastMsg
+    updateContact
   }
 }
 
