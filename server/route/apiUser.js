@@ -1,5 +1,7 @@
 const router = require('express').Router();
-const admin = require('../firebase/firebaseAdmin')
+const User = require('../model/User');
+const admin = require('../firebase/firebaseAdmin');
+const requireAuth = require('../middlewares/requireAuth');
 
 router.get("/:userID", (req, res) => {
   const { userID } = req.params;
@@ -9,9 +11,24 @@ router.get("/:userID", (req, res) => {
     })
     .catch(e => {
       // console.log(e)
-      res.status(404).end();
+      res.sendStatus(404);
     })
-
 })
+
+router.use('/', requireAuth)
+router.post('/', (req, res) => {
+  const { name, picture } = req.decodedToken;
+  const doc = new User({
+    uid: req.body.uid,
+    displayName: name,
+    photoURL: picture,
+    contacts: []
+  });
+  doc.save((err, doc) => {
+    if (err) res.sendStatus(501);
+    console.log('User created')
+    res.sendStatus(200);
+  });
+});
 
 module.exports = router;
