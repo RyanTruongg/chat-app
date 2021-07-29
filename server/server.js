@@ -47,7 +47,6 @@ io.use((socket, next) => {
       })
       .catch((error) => {
         console.log(error);
-        res.status(401).send('Unauthorized');
         next(error);
       });
   }
@@ -59,8 +58,6 @@ io.on("connection", (socket) => {
   socket.join(socket.user.uid)
 
   socket.on("msg:create", createMsg)
-  // socket.emit("msg:create")
-  // socket.emit("private msg")
 
   socket.onAny((eventName) => {
     console.log(eventName);
@@ -71,7 +68,3 @@ io.on("connection", (socket) => {
 io.on("disconnect", socket => {
   console.log(socket.user?.uid)
 })
-
-
-
-
