@@ -1,13 +1,22 @@
-const Message = require('../model/Message');
 const User = require('../model/User');
 
 const router = require('express').Router();
-const admin = require('../firebase/firebaseAdmin');
 
 const requireAuth = require('../middlewares/requireAuth')
 
-router.use('/*', requireAuth);
+router.put('/update-seen', (req, res) => {
+  const { userID, contactID } = req.body;
+  let options = {
+    arrayFilters: [
+      { "contact.contactID": contactID }
+    ]
+  }
+  User.findOneAndUpdate({ uid: userID }, { $set: { "contacts.$[contact].seen": true } }, options).exec()
+    .then(result => res.sendStatus(200))
+    .catch(e => console.log(e));
+})
 
+router.use('/:userID', requireAuth);
 router.get("/:userID", async (req, res) => {
   const { userID } = req.params;
   const decodedToken = req.decodedToken;
