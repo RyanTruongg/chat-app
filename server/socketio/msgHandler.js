@@ -12,18 +12,27 @@ async function updateContacts(u1, u2, { from, content, UTC }) {
     }
   }
 
-  let options = {
-    upsert: true,
-    arrayFilters: [
-      { "receivingUser.contactID": u2 }
-    ]
-  }
-  return User.findOneAndUpdate(
-    { uid: u1 },
-    { $addToSet: { "contacts.$[receivingUser]": contact } },
-    options)
-    .exec();
+  let user = await User.findOne({ uid: u1 }).exec();
+  let contacts = user.contacts;
 
+  if (contacts.some(element => element.contactID === u2)) {
+    let options = {
+      arrayFilters: [
+        { "receivingUser.contactID": u2 }
+      ]
+    }
+    return User.findOneAndUpdate(
+      { uid: u1 },
+      { $set: { "contacts.$[receivingUser]": contact } },
+      options)
+      .exec();
+
+  } else {
+    return User.findOneAndUpdate(
+      { uid: u1 },
+      { $push: { contacts: contact } })
+      .exec();
+  }
 }
 
 module.exports = (io) => {
