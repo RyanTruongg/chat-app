@@ -1,14 +1,14 @@
 const Message = require("../model/Message");
 const User = require('../model/User');
 
-async function updateContacts(u1, u2, { from, content, UTC }) {
+async function updateContacts(u1, u2, { from, content, timestamp }) {
   let contact = {
-    seen: false,
+    seen: u1 === from,
     contactID: u2,
     lastMsg: {
       from: from,
       content: content,
-      timestamp: UTC,
+      timestamp: timestamp,
     }
   }
 
