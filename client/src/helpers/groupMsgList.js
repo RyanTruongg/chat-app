@@ -1,21 +1,21 @@
 const groupMsgList = (_msgList) => {
   _msgList = Array.from(_msgList);
-  let res = []
-  let tmp = { from: "", msg: [] }
+  let res = [];
+  let tmp = { from: "", msg: [] };
   for (var _msg of _msgList) {
     const msgContentAndTime = {
       timestamp: _msg.timestamp,
-      content: _msg.content
+      content: _msg.content,
     };
     if (tmp.from) {
-      if (_msg.from !== tmp.from) {
+      if (_msg.senderID !== tmp.from) {
         res.push(tmp);
-        tmp = { from: _msg.from, msg: [msgContentAndTime] }
+        tmp = { from: _msg.senderID, msg: [msgContentAndTime] };
       } else {
-        tmp.msg.push(msgContentAndTime)
+        tmp.msg.push(msgContentAndTime);
       }
     } else {
-      tmp.from = _msg.from;
+      tmp.from = _msg.senderID;
       tmp.msg = [msgContentAndTime];
     }
     // console.log({ tmp })
@@ -23,6 +23,6 @@ const groupMsgList = (_msgList) => {
   if (tmp.from) res.push(tmp);
 
   return res;
-}
+};
 
 export default groupMsgList;

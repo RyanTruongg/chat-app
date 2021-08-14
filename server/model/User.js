@@ -1,21 +1,30 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
-  uid: String,
+  _id: String,
   displayName: String,
   photoURL: String,
-  contacts: [{
-    contactID: String,
-    seen: Boolean,
-    lastMsg: {
-      from: String,
-      content: String,
-      timestamp: Number
-    }
-  }]
+  privateConversations: [
+    new Schema(
+      {
+        contactID: { type: String, ref: "User" },
+        seen: Boolean,
+      },
+      { _id: false }
+    ),
+  ],
+  roomConversations: [
+    new Schema(
+      {
+        roomID: { type: String, ref: "Room" },
+        seen: Boolean,
+      },
+      { _id: false }
+    ),
+  ],
 });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;

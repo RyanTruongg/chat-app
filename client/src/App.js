@@ -1,26 +1,15 @@
-import React, { Suspense } from 'react';
+import React, { Suspense } from "react";
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
-import {
-  ProvideAuth,
-  PrivateRoute,
-} from './hook/use-auth';
+import { ProvideAuth, PrivateRoute } from "./hook/use-auth";
 
-import { ProvideContactList } from './hook/use-contact-list';
-
-const Main = React.lazy(() => import('./pages/Main'));
-const Login = React.lazy(() => import('./pages/Login'));
-
+const Main = React.lazy(() => import("./pages/Main"));
+const Login = React.lazy(() => import("./pages/Login"));
 
 // import socket from './socket/socket';
 
 function App() {
-
   return (
     <div className="app">
       <ProvideAuth>
@@ -36,16 +25,12 @@ function App() {
           </PrivateRoute>
 
           <PrivateRoute path="/home">
-            <ProvideContactList>
-              <Suspense fallback={<div>Loading...</div>}>
-                <Main />
-              </Suspense>
-            </ProvideContactList>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Main />
+            </Suspense>
           </PrivateRoute>
-
         </Router>
       </ProvideAuth>
-
     </div>
   );
 }

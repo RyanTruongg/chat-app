@@ -1,17 +1,23 @@
-const Message = require('../model/Message');
+const Message = require("../model/Message");
 
-const router = require('express').Router();
+const router = require("express").Router();
 
-const requireAuth = require('../middlewares/requireAuth')
+const requireAuth = require("../middlewares/requireAuth");
 
-router.use('/*', requireAuth);
+router.use("/*", requireAuth);
 
 router.get("/", async (req, res) => {
-  const { from, to } = req.query;
-  if (req.decodedToken.uid !== from) res.sendStatus(401);
-  const a = await Message.find({ from: from, to: to }).exec();
-  const b = await Message.find({ from: to, to: from }).exec();
-  res.json([...a, ...b]);
-})
+  const { uid, conversationID } = req.query;
+  if (req.decodedToken.uid !== uid) res.sendStatus(401);
+  const messages = await Message.find({
+    $or: [
+      { senderID: uid, receiverID: conversationID },
+      { senderID: conversationID, receiverID: uid },
+    ],
+  })
+    .lean()
+    .exec();
+  return res.json(messages);
+});
 
 module.exports = router;

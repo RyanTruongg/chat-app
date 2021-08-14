@@ -6,15 +6,15 @@ const options = {
     origin: [
       "http://localhost:3000",
       "https://messenger-clone.online",
-      "https://messenger-clone-ryannt.netlify.app"
-    ]
-  }
-}
+      "https://messenger-clone-ryannt.netlify.app",
+    ],
+  },
+};
 const io = require("socket.io")(httpServer, options);
-require('./db/mongoDB');
+require("./db/mongoDB");
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 httpServer.listen(process.env.PORT || 3001);
 
@@ -22,15 +22,15 @@ httpServer.listen(process.env.PORT || 3001);
 const { createMsg } = require("./socketio/msgHandler")(io);
 
 // router
-const apiUserRouter = require('./route/apiUser');
-const apiMessageRouter = require('./route/apiMessage');
-const apiContactsRouter = require('./route/apiContacts');
+const apiUserRouter = require("./route/apiUser");
+const apiMessageRouter = require("./route/apiMessage");
+const apiConversationsRouter = require("./route/apiConversations");
 
 app.use("/api/user/", apiUserRouter);
 app.use("/api/message/", apiMessageRouter);
-app.use("/api/contacts/", apiContactsRouter);
+app.use("/api/conversations/", apiConversationsRouter);
 
-const admin = require('./firebase/firebaseAdmin');
+const admin = require("./firebase/firebaseAdmin");
 
 io.use((socket, next) => {
   const idToken = socket.handshake.auth.idToken;
@@ -50,21 +50,19 @@ io.use((socket, next) => {
         next(error);
       });
   }
-
 });
 
 io.on("connection", (socket) => {
   console.log(socket.user.uid, "- connected");
-  socket.join(socket.user.uid)
+  socket.join(socket.user.uid);
 
-  socket.on("msg:create", createMsg)
+  socket.on("msg:create", createMsg);
 
   socket.onAny((eventName) => {
     console.log(eventName);
-  })
-
+  });
 });
 
-io.on("disconnect", socket => {
-  console.log(socket.user?.uid)
-})
+io.on("disconnect", (socket) => {
+  console.log(socket.user?.uid);
+});

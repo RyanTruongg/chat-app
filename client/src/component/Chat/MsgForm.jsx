@@ -1,31 +1,30 @@
-import { useState } from 'react';
-import { useContactList } from '../../hook/use-contact-list';
+import { useState } from "react";
+import useConversationList from "../../hook/use-conversations-list";
 
-import socket from '../../service/websocket';
+import socket from "../../service/websocket";
 
+import Button from "../common/Button";
 
-import Button from '../common/Button';
-
-const MsgForm = ({ roomID, uid, pushNewMsg }) => {
+const MsgForm = ({ conversationID, uid, pushNewMessage }) => {
   const [msg, setMsg] = useState("");
 
-  const { updateContact } = useContactList();
+  const { updateConversation } = useConversationList();
 
   const sendMsg = (e) => {
     e.preventDefault();
     if (msg.trim()) {
       const payload = {
-        from: uid,
-        to: roomID,
-        content: msg,
-      }
-      socket.emit("msg:create", payload, ({ doc, contact }) => {
-        pushNewMsg(doc);
-        updateContact(contact);
+        senderID: uid,
+        receiverID: conversationID,
+        content: msg.trim(),
+      };
+      socket.emit("msg:create", payload, ({ doc, conversation }) => {
+        pushNewMessage(conversation.info._id, doc);
+        updateConversation(conversation);
       });
     }
     setMsg("");
-  }
+  };
 
   return (
     <div className="msg-form">
@@ -45,6 +44,6 @@ const MsgForm = ({ roomID, uid, pushNewMsg }) => {
       </form>
     </div>
   );
-}
+};
 
 export default MsgForm;

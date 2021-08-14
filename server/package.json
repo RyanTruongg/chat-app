@@ -4,19 +4,19 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server/server.js",
-    "dev": "npm run server:start",
-    "server:start": "nodemon server/server.js",
-    "client:build": "cd client && npm run build"
+    "start": "node server.js",
+    "dev": "nodemon server/server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.6.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "firebase-admin": "^9.10.0",
     "mongoose": "^5.12.15",
+    "react-redux": "^7.2.4",
     "socket.io": "^4.1.2"
   },
   "devDependencies": {

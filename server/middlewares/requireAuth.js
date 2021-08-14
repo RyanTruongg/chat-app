@@ -1,12 +1,11 @@
-const admin = require('../firebase/firebaseAdmin');
+const admin = require("../firebase/firebaseAdmin");
 
 async function requireAuth(req, res, next) {
-  const jwt = req.get('Authorization')?.split(' ')[1];
+  const jwt = req.get("Authorization")?.split(" ")[1];
   if (!jwt) {
-    res.status(401).send('Unauthorized')
-    next('Unauthorized');
-  }
-  else
+    res.status(401).send("Unauthorized");
+    next("Unauthorized");
+  } else
     admin
       .auth()
       .verifyIdToken(jwt)
@@ -16,7 +15,7 @@ async function requireAuth(req, res, next) {
       })
       .catch((error) => {
         console.log(error);
-        res.status(401).send('Unauthorized');
+        res.status(401).send("Unauthorized");
         next(error);
       });
 }

@@ -1,5 +1,5 @@
 import firebase from "firebase/app";
-import 'firebase/auth';
+import "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBtLFctIyZhPquAqnrLP8DxOCJnDv16xvI",
@@ -8,7 +8,7 @@ const firebaseConfig = {
   storageBucket: "chat-app-73a8d.appspot.com",
   messagingSenderId: "1026946776432",
   appId: "1:1026946776432:web:0e06c59bd41ce6ea01e3b5",
-  measurementId: "G-QKZ0YM2KWT"
+  measurementId: "G-QKZ0YM2KWT",
 };
 
 firebase.initializeApp(firebaseConfig);

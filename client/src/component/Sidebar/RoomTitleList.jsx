@@ -1,19 +1,21 @@
-import RoomTitleCard from './RoomTitleCard';
+import RoomTitleCard from "./RoomTitleCard";
 
-const ChatboxList = ({ listData, setOpen }) => {
+const ChatboxList = ({ data, setOpen }) => {
   return (
     <div className="room-title__list">
-      {listData?.map(({ contactID, ...rest }) => /* contactID, displayName, msg */
+      {data?.map(({ info, lastMsg, seen, ...rest }) => (
         <RoomTitleCard
-          key={contactID}
-          {...rest}
-          to={"/home/t/" + contactID}
-          contactID={contactID}
+          key={info._id}
+          seen={seen}
+          info={info}
+          lastMsg={lastMsg}
+          to={"/home/t/" + info._id}
           setOpen={setOpen}
+          {...rest}
         />
-      )}
+      ))}
     </div>
   );
-}
+};
 
 export default ChatboxList;

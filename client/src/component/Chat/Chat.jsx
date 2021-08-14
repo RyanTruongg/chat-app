@@ -1,114 +1,48 @@
-import { useEffect, useState, useCallback } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
-import { useAuth } from '../../hook/use-auth';
-import { useContactList } from '../../hook/use-contact-list';
-import socket from '../../service/websocket';
+import { useAuth } from "../../hook/use-auth";
 
-import ChatHeader from './ChatHeader';
-import ChatMsgContainer from './MsgContainer';
-import MsgForm from './MsgForm';
+import ChatHeader from "./ChatHeader";
+import ChatMsgContainer from "./MsgContainer";
+import MsgForm from "./MsgForm";
 
-import groupMsgList from '../../helpers/groupMsgList';
-
-import './chat.css';
+import "./chat.css";
+import useConversationList from "../../hook/use-conversations-list";
+import { useMessages } from "../../hook/use-messages";
 
 const Chat = () => {
-  const [roomInfo, setRoomInfo] = useState(null);
-  const { roomID } = useParams();
-  const [msgList, setMsgList] = useState([]);
+  const { conversationID } = useParams();
 
+  const { getConversationInfo } = useConversationList();
+  const { groupMessages, pushNewMessage } = useMessages(conversationID);
   const auth = useAuth();
+
+  const groupedMessages = groupMessages();
+  const conversationInfo = getConversationInfo(conversationID);
   const uid = auth.user?.uid;
 
-  const { updateContact } = useContactList();
-
-  const pushNewMsg = useCallback((msg) => {
-    let tmp = [...msgList];
-    let last = tmp.pop();
-
-    const msgContentAndTime = {
-      timestamp: msg.timestamp,
-      content: msg.content
-    };
-    if (!last) {
-      setMsgList([{ from: msg.from, msg: [msgContentAndTime] }]);
-      return;
-    }
-
-    if (last?.from === msg?.from) {
-      last.msg.push(msgContentAndTime)
-      tmp.push(last);
-    } else {
-      let newMsg = { from: msg.from, msg: [msgContentAndTime] }
-      tmp.push(last);
-      tmp.push(newMsg)
-    }
-
-    setMsgList(tmp);
-  }, [msgList])
-
-  useEffect(() => {
-    const res = fetch("/api/user/" + roomID);
-    const json = res.then(res => res.json());
-    json.then(json => {
-      setRoomInfo(json);
-      // console.log(json)
-    }).catch(e => {
-      console.log(e)
-    })
-  }, [roomID]);
-
-  useEffect(() => {
-    import('../../service/firebase')
-      .then(({ default: firebase }) => {
-        firebase.auth().currentUser?.getIdToken(true)
-          .then((idToken) => {
-            const headers = { 'Authorization': 'Bearer ' + idToken }
-            const url = `/api/message?from=${uid}&to=${roomID}`;
-            fetch(url, { headers })
-              .then(res => res.json())
-              .then(json => {
-                const sorted = [...json].sort((a, b) => a.timestamp - b.timestamp);
-                const group = groupMsgList(sorted);
-                setMsgList(group)
-              })
-              .catch(e => console.log(e));
-          });
-      })
-  }, [roomID, uid])
-
-  useEffect(() => {
-    socket.on("private msg", ({ doc, contact }) => {
-      if (doc.from === roomID) {
-        pushNewMsg(doc);
-      }
-      updateContact(contact);
-    })
-
-    return () => {
-      socket.off('private msg');
-    }
-
-  }, [pushNewMsg, roomID, updateContact]);
-
-  if (roomInfo?.uid === roomID) {
+  if (groupedMessages) {
     return (
       <div className="chat">
-        <ChatHeader {...roomInfo} />
+        <ChatHeader
+          displayName={conversationInfo?.displayName || ""}
+          photoURL={conversationInfo?.photoURL || ""}
+        />
         <ChatMsgContainer
-          roomPhotoURL={roomInfo?.photoURL}
+          roomPhotoURL={conversationInfo?.photoURL || ""}
           uid={uid}
-          msgList={msgList} />
+          msgList={groupedMessages}
+        />
         <MsgForm
-          pushNewMsg={pushNewMsg}
-          roomID={roomID}
-          uid={uid} />
+          pushNewMessage={pushNewMessage}
+          conversationID={conversationID}
+          uid={uid}
+        />
       </div>
     );
   } else {
-    return <p>Loading...</p>
+    return <p>Loading...</p>;
   }
-}
+};
 
 export default Chat;
