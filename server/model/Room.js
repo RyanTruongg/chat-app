@@ -2,16 +2,10 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const roomSchema = new Schema({
-  name: String,
+  displayName: String,
   adminID: String,
-  roomPhotoURL: String,
-  members: [
-    {
-      memberID: String,
-      displayName: String,
-      photoURL: String,
-    },
-  ],
+  photoURL: String,
+  members: [{ type: String, ref: "User" }],
 });
 
 const Room = mongoose.model("Room", roomSchema);

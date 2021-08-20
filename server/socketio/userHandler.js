@@ -1,11 +1,23 @@
-const admin = require("../firebaseAdmin");
+const User = require("../model/User");
 
 module.exports = (io) => {
-  const getUser = function (userID) {
+  const searchUser = async function (text, cb) {
     const socket = this;
-  }
+    const query = text
+      ? {
+          $and: [
+            { displayName: { $regex: text, $options: "i" } },
+            { _id: { $ne: socket.user.uid } },
+          ],
+        }
+      : { _id: { $ne: socket.user.uid } };
 
-  return {
+    const users = await User.find(query, {
+      displayName: 1,
+      photoURL: 1,
+    }).exec();
+    cb(users);
+  };
 
-  }
-}
+  return { searchUser };
+};

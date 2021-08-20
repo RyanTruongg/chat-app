@@ -20,6 +20,7 @@ httpServer.listen(process.env.PORT || 3001);
 
 // Socket event handlers
 const { createMsg } = require("./socketio/msgHandler")(io);
+const { searchUser } = require("./socketio/userHandler")(io);
 
 // router
 const apiUserRouter = require("./route/apiUser");
@@ -57,6 +58,7 @@ io.on("connection", (socket) => {
   socket.join(socket.user.uid);
 
   socket.on("msg:create", createMsg);
+  socket.on("search:user", searchUser);
 
   socket.onAny((eventName) => {
     console.log(eventName);
