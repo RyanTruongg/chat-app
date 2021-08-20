@@ -52,7 +52,7 @@
   border-radius: 16px;
   background-color: #f3f3f3;
 }
-.sidebar-bottom img {
+.sidebar-bottom .search-icon {
   width: 20px;
   height: 20px;
   position: absolute;
@@ -61,7 +61,7 @@
   transition: 0.3s ease-in;
   opacity: 1;
 }
-.sidebar-bottom input:focus + img {
+.sidebar-bottom input:focus + .search-icon {
   opacity: 0;
 }
 

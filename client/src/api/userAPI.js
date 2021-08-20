@@ -8,8 +8,13 @@ export const createNewUser = (uid) => {
   return fetchWithToken("/api/user/", options);
 };
 
+export const fetchUserById = (uid) => {
+  return fetchWithToken("/api/user/" + uid);
+};
+
 const userAPI = {
   createNewUser,
+  fetchUserById,
 };
 
 export default userAPI;

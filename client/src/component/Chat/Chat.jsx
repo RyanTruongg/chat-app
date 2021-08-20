@@ -1,35 +1,36 @@
 import { useParams } from "react-router-dom";
 
 import { useAuth } from "../../hook/use-auth";
+import useUserInfo from "../../hook/use-user-info";
 
 import ChatHeader from "./ChatHeader";
 import ChatMsgContainer from "./MsgContainer";
 import MsgForm from "./MsgForm";
 
 import "./chat.css";
-import useConversationList from "../../hook/use-conversations-list";
 import { useMessages } from "../../hook/use-messages";
 
 const Chat = () => {
   const { conversationID } = useParams();
 
-  const { getConversationInfo } = useConversationList();
   const { groupMessages, pushNewMessage } = useMessages(conversationID);
   const auth = useAuth();
 
   const groupedMessages = groupMessages();
-  const conversationInfo = getConversationInfo(conversationID);
+  const userInfo = useUserInfo().getUserById(conversationID);
   const uid = auth.user?.uid;
 
   if (groupedMessages) {
     return (
       <div className="chat">
         <ChatHeader
-          displayName={conversationInfo?.displayName || ""}
-          photoURL={conversationInfo?.photoURL || ""}
+          displayName={userInfo?.displayName || "Loading..."}
+          photoURL={userInfo?.photoURL || "https://i.stack.imgur.com/ATB3o.gif"}
         />
         <ChatMsgContainer
-          roomPhotoURL={conversationInfo?.photoURL || ""}
+          roomPhotoURL={
+            userInfo?.photoURL || "https://i.stack.imgur.com/ATB3o.gif"
+          }
           uid={uid}
           msgList={groupedMessages}
         />

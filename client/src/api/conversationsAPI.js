@@ -1,7 +1,6 @@
 import fetchWithToken from "./fetchWithToken";
 
 export const fetchAllConversationsOfUser = (uid) => {
-  console.log("a");
   return fetchWithToken("/api/conversations/" + uid);
 };
 
